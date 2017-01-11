@@ -6,34 +6,86 @@
 <script>
 
 stage = new PIXI.Container(),
-    renderer = PIXI.autoDetectRenderer(512, 512);
+renderer = PIXI.autoDetectRenderer(512, 512);
+renderer.backgroundColor = 0xFFFFFF;
+renderer.view.style.border = "1px dashed black";
 document.body.appendChild(renderer.view);
   
 //Use Pixi's built-in `loader` object to load an image
 PIXI.loader
   .add("images/sprites/hamster.gif")
+  .add("images/sprites/tv.jpg")
+  .add("images/sprites/hamster_wheel.png")
+  .add("images/sprites/gamecube.png")
+  .add("images/sprites/imac.gif")
+  .add("images/sprites/control_panel.jpg")
   .load(setup);
 
 
 function setup() {
-  texture = PIXI.utils.TextureCache["images/sprites/hamster.gif"];
-  hamster = new PIXI.Sprite(texture)
-
+  // add the hamster
+  hamster_texture = PIXI.utils.TextureCache["images/sprites/hamster.gif"];
+  hamster = new PIXI.Sprite(hamster_texture)
   hamster.width = renderer.width / 8.0;
   hamster.height = renderer.height / 8.0;
   hamster.vx = 0;
   hamster.vy = 0;
   hamster.x = 96;
   hamster.y = 96;
-  //Add the cat to the stage
   stage.addChild(hamster);
+  // add the tv
+  tv_texture = PIXI.utils.TextureCache["images/sprites/tv.jpg"];
+  tv = new PIXI.Sprite(tv_texture)
+  tv.width = renderer.width / 4.0;
+  tv.height = renderer.height / 4.0;
+  tv.x = 348;
+  tv.y = 0;
+  stage.addChild(tv);
   
+  // add the hamster wheel
+  wheel_texture = PIXI.utils.TextureCache["images/sprites/hamster_wheel.png"];
+  wheel = new PIXI.Sprite(wheel_texture)
+  wheel.width = renderer.width / 3.0;
+  wheel.height = renderer.height / 3.0;
+  wheel.x = 0;
+  wheel.y = 348;
+  stage.addChild(wheel);
+   
+  // add the gamecube
+  gamecube_texture = PIXI.utils.TextureCache["images/sprites/gamecube.png"];
+  gamecube = new PIXI.Sprite(gamecube_texture)
+  gamecube.width = renderer.width / 5.0;
+  gamecube.height = renderer.height / 5.0;
+  gamecube.x =512 -106;
+  gamecube.y = 96;
+  stage.addChild(gamecube);
+  
+  // add the imac
+  imac_texture = PIXI.utils.TextureCache["images/sprites/imac.gif"];
+  imac = new PIXI.Sprite(imac_texture)
+  imac.width = renderer.width / 5.0;
+  imac.height = renderer.height / 5.0;
+  imac.x =348 - 96;
+  imac.y = 0;
+  stage.addChild(imac);
+  
+  // add the control panel
+  panel_texture = PIXI.utils.TextureCache["images/sprites/control_panel.jpg"];
+  control_panel = new PIXI.Sprite(panel_texture)
+  control_panel.width = renderer.width / 5.0;
+  control_panel.height = renderer.height / 5.0;
+  control_panel.x =0;
+  control_panel.y = 0;
+  stage.addChild(control_panel);
+  
+  
+  // define movements  
   left = keyboard(37);
   up = keyboard(38);
   right = keyboard(39);
   down = keyboard(40);
   
-  // define movements
+
   up.press = function() {
     hamster.vy = -5;
     hamster.vx = 0;
