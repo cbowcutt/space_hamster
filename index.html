@@ -1,0 +1,142 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>Hello World</title>
+<body>
+<script src="pixi.min.js"></script>
+<script>
+
+stage = new PIXI.Container(),
+    renderer = PIXI.autoDetectRenderer(512, 512);
+document.body.appendChild(renderer.view);
+  
+//Use Pixi's built-in `loader` object to load an image
+PIXI.loader
+  .add("images/sprites/hamster.gif")
+  .load(setup);
+
+
+function setup() {
+  texture = PIXI.utils.TextureCache["images/sprites/hamster.gif"];
+  hamster = new PIXI.Sprite(texture)
+
+  hamster.width = renderer.width / 8.0;
+  hamster.height = renderer.height / 8.0;
+  hamster.vx = 0;
+  hamster.vy = 0;
+  hamster.x = 96;
+  hamster.y = 96;
+  //Add the cat to the stage
+  stage.addChild(hamster);
+  
+  left = keyboard(37);
+  up = keyboard(38);
+  right = keyboard(39);
+  down = keyboard(40);
+  
+  // define movements
+  up.press = function() {
+    hamster.vy = -5;
+    hamster.vx = 0;
+  };
+  up.release = function() {
+    if (!down.isDown && hamster.vx === 0) {
+      hamster.vy = 0;
+    }
+  };
+  down.press = function() {
+    hamster.vy = 5;
+    hamster.vx = 0;
+  };
+  down.release = function() {
+    if (!up.isDown && hamster.vx === 0) {
+      hamster.vy = 0;
+    }
+  };
+    //Left arrow key `press` method
+  left.press = function() {
+
+    //Change the cat's velocity when the key is pressed
+    hamster.vx = -5;
+    hamster.vy = 0;
+  };
+  left.release = function() {
+
+    //If the left arrow has been released, and the right arrow isn't down,
+    //and the cat isn't moving vertically:
+    //Stop the cat
+    if (!right.isDown && hamster.vy === 0) {
+      hamster.vx = 0;
+    }
+  };
+  right.press = function() {
+    hamster.vx = 5;
+    hamster.vy = 0;
+  };
+  right.release = function() {
+    if (!left.isDown && hamster.vy === 0) {
+      hamster.vx = 0;
+    }
+  };
+  
+  state = play;
+
+  
+  gameLoop();
+}
+  
+function gameLoop(){
+  requestAnimationFrame(gameLoop);
+  state();
+  renderer.render(stage);
+}
+
+function play() {
+  hamster.x += hamster.vx;
+  hamster.y += hamster.vy
+}
+
+
+function keyboard(keyCode) {
+  var key = {};
+  key.code = keyCode;
+  key.isDown = false;
+  key.isUp = true;
+  key.press = undefined;
+  key.release = undefined;
+  //The `downHandler`
+  key.downHandler = function(event) {
+    if (event.keyCode === key.code) {
+      if (key.isUp && key.press) key.press();
+      key.isDown = true;
+      key.isUp = false;
+    }
+    event.preventDefault();
+  };
+
+  //The `upHandler`
+  key.upHandler = function(event) {
+    if (event.keyCode === key.code) {
+      if (key.isDown && key.release) key.release();
+      key.isDown = false;
+      key.isUp = true;
+    }
+    event.preventDefault();
+  };
+
+  //Attach event listeners
+  window.addEventListener(
+    "keydown", key.downHandler.bind(key), false
+  );
+  window.addEventListener(
+    "keyup", key.upHandler.bind(key), false
+  );
+  return key;
+}
+
+
+
+
+
+
+</script>
+</body>
