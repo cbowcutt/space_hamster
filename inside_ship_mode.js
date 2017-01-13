@@ -39,7 +39,7 @@ function draw_spaceship_background(){
   
 function draw_hamster(){
     // add the hamster
-  hamster_texture = PIXI.utils.TextureCache["images/sprites/hamster.gif"];
+  hamster_texture = PIXI.utils.TextureCache["images/sprites/hamster.png"];
   hamster = new PIXI.Sprite(hamster_texture)
   hamster.width = renderer.width / 4.0;
   hamster.height = renderer.height / 4.0;
@@ -107,14 +107,52 @@ function draw_furniture(){
   stage.addChild(bed);
 }
   
-// function gameLoop(){
-//   requestAnimationFrame(gameLoop);
-//   state();
-//   renderer.render(stage);
-// }
+function load_inside_ship_controls() {
+    up.press = function() {
+    player_sprite.vy = -5;
+    player_sprite.vx = 0;
+  };
+  up.release = function() {
+    if (!down.isDown && player_sprite.vx === 0) {
+      player_sprite.vy = 0;
+    }
+  };
+  down.press = function() {
+    player_sprite.vy = 5;
+    player_sprite.vx = 0;
+  };
+  down.release = function() {
+    if (!up.isDown && player_sprite.vx === 0) {
+      player_sprite.vy = 0;
+    }
+  };
+    //Left arrow key `press` method
+  left.press = function() {
 
-// function inside_ship() {
-//   hamster.x += hamster.vx;
-//   hamster.y += hamster.vy
-// }
+    //Change the cat's velocity when the key is pressed
+    player_sprite.vx = -5;
+    player_sprite.vy = 0;
+  };
+  left.release = function() {
+
+    //If the left arrow has been released, and the right arrow isn't down,
+    //and the cat isn't moving vertically:
+    //Stop the cat
+    if (!right.isDown && player_sprite.vy === 0) {
+      player_sprite.vx = 0;
+    }
+  };
+  right.press = function() {
+    player_sprite.vx = 5;
+    player_sprite.vy = 0;
+  };
+  right.release = function() {
+    if (!left.isDown && player_sprite.vy === 0) {
+      player_sprite.vx = 0;
+    }
+  };
+  spacebar.release = function() {
+      piloting_ship_setup();
+  }
+}
 

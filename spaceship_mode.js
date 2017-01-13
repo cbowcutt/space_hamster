@@ -39,10 +39,8 @@ function draw_spaceship_background(){
   
 function draw_hamster(){
     // add the hamster
-  hamster_texture = PIXI.utils.TextureCache["images/sprites/hamster.gif"];
+  hamster_texture = PIXI.utils.TextureCache["images/sprites/hamster.png"];
   hamster = new PIXI.Sprite(hamster_texture)
-  hamster.width = renderer.width / 4.0;
-  hamster.height = renderer.height / 4.0;
   hamster.vx = 0;
   hamster.vy = 0;
   hamster.x = 96;
