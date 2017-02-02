@@ -1,26 +1,5 @@
 
   
-// //Use Pixi's built-in `loader` object to load an image
-// PIXI.loader
-//   .add("images/sprites/hamster.gif")
-//   .add("images/sprites/tv.jpg")
-//   .add("images/sprites/hamster_wheel.png")
-//   .add("images/sprites/gamecube.png")
-//   .add("images/sprites/imac.gif")
-//   .add("images/sprites/control_panel.gif")
-//   .add("images/sprites/tile.png")
-//   .add("images/sprites/bed.png")
-//   .load(inside_ship_setup);
-
-
-// function inside_ship_setup() {
-//   draw_background();
-//   draw_hamster();
-//   draw_furniture();
-//   state = inside_ship;
-//   gameLoop();
-// }
-  
 function draw_spaceship_background(){
   var step_x = renderer.width / 8;
   var step_y = renderer.height / 8;
@@ -41,8 +20,8 @@ function draw_hamster(){
     // add the hamster
   hamster_texture = PIXI.utils.TextureCache["images/sprites/hamster.png"];
   hamster = new PIXI.Sprite(hamster_texture)
-  hamster.width = renderer.width / 4.0;
-  hamster.height = renderer.height / 4.0;
+  hamster.width = renderer.width / 8.0;
+  hamster.height = renderer.height / 8.0;
   hamster.vx = 0;
   hamster.vy = 0;
   hamster.x = 96;
@@ -109,7 +88,7 @@ function draw_furniture(){
   
 function load_inside_ship_controls() {
     up.press = function() {
-    player_sprite.vy = -5;
+    player_sprite.vy = -13;
     player_sprite.vx = 0;
   };
   up.release = function() {
@@ -118,7 +97,7 @@ function load_inside_ship_controls() {
     }
   };
   down.press = function() {
-    player_sprite.vy = 5;
+    player_sprite.vy = 13;
     player_sprite.vx = 0;
   };
   down.release = function() {
@@ -130,7 +109,7 @@ function load_inside_ship_controls() {
   left.press = function() {
 
     //Change the cat's velocity when the key is pressed
-    player_sprite.vx = -5;
+    player_sprite.vx = -13;
     player_sprite.vy = 0;
   };
   left.release = function() {
@@ -143,7 +122,7 @@ function load_inside_ship_controls() {
     }
   };
   right.press = function() {
-    player_sprite.vx = 5;
+    player_sprite.vx = 13;
     player_sprite.vy = 0;
   };
   right.release = function() {
