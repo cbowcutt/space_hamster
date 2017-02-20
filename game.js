@@ -6,54 +6,26 @@ var inside_home_tilemap
 const TILEWIDTH = 32;
 const TILEHEIGHT = 32;
 
+var controller = new Controller();
+
 
 var scene = new Scene(800, 600, 'myCanvas');
 var Player = undefined;
 var CurrentMap = undefined;
 
 
-
-// function upstairs_setup() {
-
-//   tile_map = inside_home_tilemap;
-//       // add the hamster
-//   hamster_texture = PIXI.utils.TextureCache["images/pikachu.png"];
-//   player_sprite = new PIXI.Sprite(hamster_texture);
-//   player_sprite.height = 16 * 4;
-//   player_sprite.width = 16 * 4;
-//   player_sprite.vx = 0;
-//   player_sprite.vy = 0;
-//   player_sprite.x = 384;
-//   player_sprite.y = 384;
-
-//   var background_texture = PIXI.utils.TextureCache["images/inside_home.png"];
-
-// 	scene.add(new PIXI.Sprite(background_texture));
-// 	scene.add(player_sprite);
-
-
-//   var neighborhood_door = new Door(9 * TILEHEIGHT, 8 * TILEWIDTH);
-//   var neighborhood_door = new Door(10 * TILEHEIGHT, 8 * TILEWIDTH);
-//   neighborhood_door.setup_new_state = function() { neighborhood_1_setup(); }
-
-//   doors.push(neighborhood_door);
-//   // doors.add(neighborhood_door);
-// 	gameLoop();
-// }
-
 function inside_home_setup() {
+  controller.loadPlayerInputs();
   var map_builder = new MapBuilder();
   map_builder.inside_home();
   var hamster_builder = new HamsterSpriteBuilder();
   hamster_builder.createPlayable();
-  Player.set_position(212, 212);
+  Player.setPosition(212, 212);
   requestAnimationFrame(gameLoop);
 }
 
 function neighborhood_1_setup() {
       // add the hamster
-
-
   var map_builder = new MapBuilder();
   map_builder.neighborhood_1();
   var hamster_builder = new HamsterSpriteBuilder();

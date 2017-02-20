@@ -3,6 +3,7 @@ function Animatable() {
 	this.y = undefined;
 	this.width = undefined;
 	this.height = undefined;
+	// this.rectangle = _rectangle
 	this.animations = {};
 	this.current_animation = undefined;
 
@@ -32,13 +33,22 @@ function Animatable() {
 		this.current_animation.play();
 	}
 
-	this.set_position = function(_x, _y) {
+	this.setPosition = function(_x, _y) {
 		this.current_animation.x = _x;
 		this.current_animation.y = _y;
 	}
 
-	this.set_size = function(_width, _height) {
+	this.setSize = function(_width, _height) {
 		this.current_animation = _width;
 		this.current_height = _height;
 	}
+
+	// this.rectangle = function() {
+	// 	return {
+	// 		x: this.x,
+	// 		y: this.y,
+	// 		width: this.width,
+	// 		height: this.height
+	// 	};
+	// }
 }
