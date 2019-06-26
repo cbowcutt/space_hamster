@@ -1,4 +1,6 @@
-function getRandomPovarInCircle(radius)
+var RoomGenerator = function(){
+var exports = {};
+exports.getRandomPovarInCircle = function(radius)
 {
 	var t = 2 * Math.random();
 	var u = math.random() + math.random();
@@ -12,94 +14,21 @@ function getRandomPovarInCircle(radius)
 	return [Math.round(radius * r * Math.cos(t)), Math.round(radius * r.math.sin(t)) ];
 }
 
-function Cell(x, y)
+exports.Cell = function(x, y)
 {
 	this.X = x;
 	this.Y = y;
 	return this;
 }
 
-function Wall(cellA, cellB)
+exports.Wall = function(cellA, cellB)
 {
 	this.CellA = cellA;
 	this.CellB = cellB;
 	return this;
 }
 
-function proceduralMap(width, length)
-{
-	// Start with a grid full of walls.
-	// 0 = path, 1 = wall
-	var maze = [];
-	for (var y = 0; y < length; y ++)
-	{
-		maze.push([]);
-		for (var x = 0; x < width; x++)
-		{
-			maze[y].push([0, false]);
-		}			
-	}
-	var walls = [];
-	// pick a cell
-	var currentCell = new Cell(0, 0);
-	//Pick a cell, mark it as part of the maze. A
-	maze[currentCell.X][currentCell.Y][1] = true;
-	// Add the walls of the cell to the wall list.
-	var adjacent = adjacentWalls(currentCell, width, length);
-	for (i = 0; i <adjacent.length; i++)
-	{
-		walls.push(adjacent[i]);
-	}
-	// while there are walls in the list
-	while (walls.length > 0)
-	{
-		var randomIndex = Math.floor((Math.random() * (walls.length -1)));
-		var randomWall = walls[randomIndex];
-		//If only one of the two cells that the wall divides is visited, then:
-		
-		var cellA = randomWall.CellA;
-		var cellB = randomWall.CellB;
-		var visitedA = maze[cellA.X][cellA.Y][1];
-		var visitedB = maze[cellB.X][cellB.Y][1];
-		if ((visitedA != visitedB) && (visitedA || visitedB))
-		{
-			currentCell = visitedA ? cellB : cellA;
-			maze[currentCell.X][currentCell.Y] = [1, true];
-			adjacent = adjacentWalls(currentCell, width, length);
-			for (i = 0; i <adjacent.length; i++)
-			{
-				walls.push(adjacent[i]);
-			}
-		}
-		walls = walls.filter(w => w != randomWall);
-	}
-	return maze;
-}
-
-function hasNorthWall(cell)
-{
-	return (cell & 0x1) == 1;
-}
-
-function hasEastWall(cell)
-{
-	return (cell & 0x2) == 1;
-}
-function hasSouthWall(cell)
-{
-	return (cell & 0x4) == 1;
-}
-function hasWestWall(cell)
-{
-	return (cell & 0x8) == 1;
-}
-
-function varermediateWall(cellA, cellB)
-{
-	return [(cellB[0] - cellA[0]) / 2, (cellB[1] - cellA[1]) / 2];
-}
-
-function Room(x, y, width, length)
+exports.Room = function(x, y, width, length)
 {
 	this.X = x;
 	this.Y = y;
@@ -108,7 +37,9 @@ function Room(x, y, width, length)
 	return this;
 }
 
-function generateMap(numRooms)
+
+
+exports.generateMap = function(numRooms)
 {
 	var map = [[]]
 	var k = 7;
@@ -131,19 +62,19 @@ function generateMap(numRooms)
 			y = previousRoom.Y;
 			if (rando == 0)
 			{
-				y += previousRoom.Length;
+				y += previousRoom.Length - 1;
 			}
 			if (rando == 1)
 			{
-				x += previousRoom.Width;
+				x += previousRoom.Width - 1;
 			}
 			if (rando >= 2)
 			{
-				x += previousRoom.Width;
-				y += previousRoom.Length;
+				x += previousRoom.Width - 1;
+				y += previousRoom.Length - 1;
 			}
 		}
-		rooms.push(new Room(x, y, width, length));
+		rooms.push(exports.Room(x, y, width, length));
 
 		for (var _y = y; _y < y + length; _y++)
 		{
@@ -154,17 +85,41 @@ function generateMap(numRooms)
 			}
 		}
 	}
-	for (var i = 0; i < rooms.length; i++)
+	return map;
+}
+
+exports.ReplaceUndefinedItems = function(map, val)
+{
+	var width = exports.MapWidth(map);
+	for (var i = 0; i < map.length; i++)
 	{
-		for (var j = 0; j < rooms[i].length; j++);
+		for (var j = 0; j < width; j++)
 		{
-			if (rooms[i][j] == undefined) rooms[i][j] = 0;
+			console.log(j + ", " + i);
+			if (typeof map[i][j] === 'undefined')
+			{
+				map[i][j] = 0;
+			}
 		}
 	}
 	return map;
 }
+exports.MapWidth = function(map)
+{
+	return Math.max.apply(null, map.map(a => a.length));
+}
 
-function adjacentWalls(cell, width, length)
+exports.FillTile = function(img, x, y, width, height, color)
+{
+	for(var i = x; i < x + width; i++)
+	{
+		for(var j = y; j < y + height; j++)
+		{
+			img.setAt(i, j, color);
+		}
+	}
+}
+exports.adjacentWalls = function(cell, width, length)
 {
 	var neighbors = []
 	var northCell = new Cell(cell.X, cell.Y - 1);
@@ -178,3 +133,6 @@ function adjacentWalls(cell, width, length)
 	if (westCell.X >= 0) neighbors.push(new Wall(cell, westCell));
 	return neighbors;
 }
+return exports;
+}
+var generator = RoomGenerator();
