@@ -1,4 +1,4 @@
-function BuildMapFromAtlas(map, tileDictionary, tileWidth, tileHeight)
+function BuildCanvasFromAtlas(map, tileDictionary, tileWidth, tileHeight)
 {
 	var mapWidth = Math.max.apply(null, map.map(a => a.length));
 	var c = document.createElement("canvas");
@@ -19,7 +19,8 @@ function BuildMapFromAtlas(map, tileDictionary, tileWidth, tileHeight)
 			ctx.fillRect(x * tileWidth, y * tileHeight, tileWidth, tileHeight);
 		}
 	}
-	return c.toDataURL('image/jpeg', 1.0);
+	return c;
+	//return c.toDataURL('image/jpeg', 1.0);
 }
 
 function test(roomCount, tilewidth, tileHeight)

@@ -50,6 +50,15 @@ function inside_home_setup() {
   requestAnimationFrame(gameLoop);
 }
 
+function procedural_dungeon_setup() {
+  var map_builder = new MapBuilder();
+  map_builder.procedural_dungeon();
+  var hamster_builder = new HamsterSpriteBuilder();
+  hamster_builder.createPlayable();
+  Player.set_position(212, 212);
+  requestAnimationFrame(gameLoop);
+}
+
 function neighborhood_1_setup() {
       // add the hamster
 
@@ -77,7 +86,7 @@ window.onload = function() {
       .add('hamster_down', 'images/hamster_down.png')
       .add('neighborhood_1', 'images/neighborhood_1.png')
       .add('inside_home', 'images/inside_home.png')
-      .load(inside_home_setup);
+      .load(procedural_dungeon_setup);
 }
 
 

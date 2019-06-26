@@ -62,16 +62,16 @@ exports.generateMap = function(numRooms)
 			y = previousRoom.Y;
 			if (rando == 0)
 			{
-				y += previousRoom.Length - 1;
+				y += previousRoom.Length - 2;
 			}
 			if (rando == 1)
 			{
-				x += previousRoom.Width - 1;
+				x += previousRoom.Width - 2;
 			}
 			if (rando >= 2)
 			{
-				x += previousRoom.Width - 1;
-				y += previousRoom.Length - 1;
+				x += previousRoom.Width - 2;
+				y += previousRoom.Length - 2;
 			}
 		}
 		rooms.push(exports.Room(x, y, width, length));

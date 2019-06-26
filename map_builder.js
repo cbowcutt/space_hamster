@@ -50,6 +50,17 @@ function MapBuilder() {
 		scene.add(map.background);
 		CurrentMap = map;
 	}
+	
+	this.procedural_dungeon = function()
+	{
+		var map = new Map();
+		map.atlas = generator.generateMap(12);
+		map.background = new PIXI.Sprite(PIXI.Texture.fromCanvas(BuildCanvasFromAtlas(map.atlas, null, TILEWIDTH, TILEHEIGHT)));
+		// map.background.width /= 2.0;
+		// map.background.height /= 2.0;
+		scene.add(map.background);
+		CurrentMap = map;
+	}
 }
 
 function Door(_x, _y, transition_callback) {
