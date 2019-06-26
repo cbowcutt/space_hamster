@@ -44,7 +44,7 @@ exports.generateMap = function(numRooms)
 	var map = [[]]
 	var k = 7;
 	var rooms = [];
-
+	var doorCoordinates = [];
 	for(var i = 0; i < numRooms; i++)
 	{
 		var width = Math.floor(Math.random() * k);
@@ -84,9 +84,17 @@ exports.generateMap = function(numRooms)
 				map[_y][_x] = 1;
 			}
 		}
+		if (i == (numRooms - 1))
+		{
+			// make door/elevator to next dungeon
+			var doorX = Math.floor(x + (width / 2));
+			var doorY = Math.floor(y + (length / 2));
+			map[doorY][doorX] = 2;
+			doorCoordinates.push([doorX, doorY]);
+		}
 	}
 	map = exports.ReplaceUndefinedItems(map, 0);
-	return map;
+	return { atlas: map, doorCoordinates: doorCoordinates[0]} ;
 }
 
 exports.ReplaceUndefinedItems = function(map, val)

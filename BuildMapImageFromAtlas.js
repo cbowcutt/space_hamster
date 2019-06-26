@@ -16,11 +16,14 @@ function BuildCanvasFromAtlas(map, tileDictionary, tileWidth, tileHeight)
 			{
 				ctx.fillStyle = "red";
 			}
+			if (map[y][x] == 2)
+			{
+				ctx.fillStyle = "green";
+			}
 			ctx.fillRect(x * tileWidth, y * tileHeight, tileWidth, tileHeight);
 		}
 	}
 	return c;
-	//return c.toDataURL('image/jpeg', 1.0);
 }
 
 function test(roomCount, tilewidth, tileHeight)

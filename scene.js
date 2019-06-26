@@ -27,5 +27,23 @@ var Scene = function(_width, _height, canvasId) {
 	this.remove = function(sprite) {
 		this.stage.removeChild(sprite);
 	}
+	this.init = function()
+	{
+
+	}
+	
+	this.reset = function()
+	{
+		document.body.removeChild(this.renderer.view);
+		this.width = _width;
+		this.height = _height;
+		this.stage = new PIXI.Container();
+		this.renderer = PIXI.autoDetectRenderer((_width, _height), document.getElementById(canvasId));
+		this.renderer.backgroundColor = 0xFFFFFF;
+		this.renderer.view.style.border = "1px dashed black";
+
+		this.sprites = {};
+		document.body.appendChild(this.renderer.view);
+	}
 }
 

@@ -51,6 +51,10 @@ function inside_home_setup() {
 }
 
 function procedural_dungeon_setup() {
+  // var stage = scene.stage;
+  // for (var i = stage.children.length - 1; i >= 0; i--) {	stage.removeChild(stage.children[i]);};
+ // // scene.stage = new stage();
+	scene.reset();
   var map_builder = new MapBuilder();
   map_builder.procedural_dungeon();
   var hamster_builder = new HamsterSpriteBuilder();
@@ -73,8 +77,9 @@ function neighborhood_1_setup() {
 
 
 function gameLoop(){
-  check_door_activations(Player);
+
   scene.render();
+  check_door_activations(Player);
   requestAnimationFrame(gameLoop);
 };
 
@@ -96,7 +101,7 @@ function check_door_activations() {
   var doors = CurrentMap.doors;
   for(var i = 0; i < doors.length; i++) {
     current_door = doors[i];
-    if (intersects(Player.current_animation, current_door)) {
+    if (intersects(Player.current_animation, current_door.rectangle)) {
       current_door.setup_new_state();
     }
   }

@@ -54,10 +54,13 @@ function MapBuilder() {
 	this.procedural_dungeon = function()
 	{
 		var map = new Map();
-		map.atlas = generator.generateMap(12);
+		var tuple = generator.generateMap(3);
+		map.atlas = tuple.atlas;
+		var doorCoordinates = tuple.doorCoordinates
 		map.background = new PIXI.Sprite(PIXI.Texture.fromCanvas(BuildCanvasFromAtlas(map.atlas, null, TILEWIDTH, TILEHEIGHT)));
 		// map.background.width /= 2.0;
 		// map.background.height /= 2.0;
+		map.doors.push(new Door(doorCoordinates[0], doorCoordinates[1], procedural_dungeon_setup));
 		scene.add(map.background);
 		CurrentMap = map;
 	}
