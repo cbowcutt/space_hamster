@@ -85,6 +85,7 @@ exports.generateMap = function(numRooms)
 			}
 		}
 	}
+	map = exports.ReplaceUndefinedItems(map, 0);
 	return map;
 }
 
