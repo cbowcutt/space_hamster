@@ -44,7 +44,7 @@ function HamsterSpriteBuilder() {
 		sprite.add_animation('walking_right', u.sprite(u.filmstrip('rat_right', 32, 32)));
 		sprite.set_current_animation('walking_down');
 		sprite.animate(scene, id);
-		return sprite
+		return sprite;
 	}
 
 

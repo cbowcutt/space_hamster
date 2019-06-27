@@ -11,6 +11,8 @@ var scene = new Scene(800, 600, 'myCanvas');
 var Player = undefined;
 var CurrentMap = undefined;
 
+var npcs = []
+
 
 
 // function upstairs_setup() {
@@ -54,7 +56,7 @@ function procedural_dungeon_setup() {
   // var stage = scene.stage;
   // for (var i = stage.children.length - 1; i >= 0; i--) {	stage.removeChild(stage.children[i]);};
  // // scene.stage = new stage();
-	scene.reset();
+  scene.reset();
   var map_builder = new MapBuilder();
   map_builder.procedural_dungeon();
   var hamster_builder = new HamsterSpriteBuilder();
@@ -62,6 +64,7 @@ function procedural_dungeon_setup() {
   Player.set_position(212, 212);
   var rat = hamster_builder.createRat();
   rat.set_position(128, 128);
+  npcs.push(rat);
   requestAnimationFrame(gameLoop);
 }
 
@@ -78,8 +81,9 @@ function neighborhood_1_setup() {
 
 
 function gameLoop(){
-
+  npcs.forEach(npc => npc.move());
   scene.render();
+  
   check_door_activations(Player);
   requestAnimationFrame(gameLoop);
 };

@@ -14,26 +14,27 @@ function Rat() {
 	this.move = function() {
 		
 
-	    this.current_animation = 'walking_right';
 	    var current_x = this.current_animation.x;
 	    var current_y = this.current_animation.y;
 
 
 
 	    var new_boundary = {
-	    	x: current_x + dx,
-	    	y: current_y + dy,
+	    	x: current_x + this.dx,
+	    	y: current_y + this.dy,
 	    	width: this.current_animation.width,
 	    	height: this.current_animation.height
 	    };
 
-	    if(!detect_collisions(new_boundary)) {
-	    	this.current_animation.y = current_y + dy;
-	    	this.current_animation.x = current_x + dx;
-	    	scene.stage.position.y -= dy;
-	    	scene.stage.position.x -= dx;
+	    if(detect_collisions(new_boundary)) {
+			this.dy = -this.dy;
+			this.dx = -this.dx;
+
 	    	this.animate(scene);
 	    }
+		this.current_animation.y = current_y + this.dy;
+		this.current_animation.x = current_x + this.dx;
+		
 	}
 }
 
