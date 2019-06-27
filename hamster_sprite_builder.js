@@ -46,6 +46,21 @@ function HamsterSpriteBuilder() {
 		sprite.animate(scene, id);
 		return sprite;
 	}
+	
+	this.createHealthBar = function(healthCount, name, id) {
+		var hearts = [];
+		let u = new SpriteUtilities(PIXI);
+		for (var i = 0; i < healthCount; i++)
+		{
+			var sprite = new Heart(0, i * TILEHEIGHT);
+			sprite.width = 32;
+			sprite.height = 32;
+			sprite.add_animation('heart', u.sprite(u.filmstrip('heart', 32, 32)));
+			sprite.set_current_animation('heart');
+			sprite.animate(scene, id);
+		}
+		return hearts;
+	}
 
 
 }

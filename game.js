@@ -62,6 +62,7 @@ function procedural_dungeon_setup() {
   var hamster_builder = new HamsterSpriteBuilder();
   hamster_builder.createPlayable();
   Player.set_position(212, 212);
+  var hearts = hamster_builder.createHealthBar(5);
   var rat = hamster_builder.createRat();
   rat.set_position(128, 128);
   npcs.push(rat);
@@ -100,6 +101,7 @@ window.onload = function() {
       .add('rat_down', 'images/rat_down.png')
       .add('neighborhood_1', 'images/neighborhood_1.png')
       .add('inside_home', 'images/inside_home.png')
+	  .add('heart', 'images/heart.png')
       .load(procedural_dungeon_setup);
 }
 
