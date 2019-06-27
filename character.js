@@ -58,7 +58,6 @@ function Character() {
 	    	this.animate(scene);
 	    }
   }
-
 }
 
 function PlayableCharacter(){

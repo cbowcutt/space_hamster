@@ -104,7 +104,6 @@ exports.ReplaceUndefinedItems = function(map, val)
 	{
 		for (var j = 0; j < width; j++)
 		{
-			console.log(j + ", " + i);
 			if (typeof map[i][j] === 'undefined')
 			{
 				map[i][j] = 0;

@@ -60,17 +60,18 @@ function procedural_dungeon_setup() {
   var hamster_builder = new HamsterSpriteBuilder();
   hamster_builder.createPlayable();
   Player.set_position(212, 212);
+  var rat = hamster_builder.createRat();
+  rat.set_position(128, 128);
   requestAnimationFrame(gameLoop);
 }
 
 function neighborhood_1_setup() {
-      // add the hamster
-
-
+  // add the hamster
   var map_builder = new MapBuilder();
   map_builder.neighborhood_1();
   var hamster_builder = new HamsterSpriteBuilder();
   hamster_builder.createPlayable();
+
   requestAnimationFrame(gameLoop);
 }
 
@@ -89,6 +90,10 @@ window.onload = function() {
       .add('hamster_right', 'images/hamster_right.png')
       .add('hamster_up', 'images/hamster_up.png')
       .add('hamster_down', 'images/hamster_down.png')
+	  .add('rat_left', 'images/rat_left.png')
+      .add('rat_right', 'images/rat_right.png')
+      .add('rat_up', 'images/rat_up.png')
+      .add('rat_down', 'images/rat_down.png')
       .add('neighborhood_1', 'images/neighborhood_1.png')
       .add('inside_home', 'images/inside_home.png')
       .load(procedural_dungeon_setup);
