@@ -12,7 +12,7 @@ var Player = undefined;
 var CurrentMap = undefined;
 
 var npcs = []
-
+var hearts;
 
 
 // function upstairs_setup() {
@@ -62,7 +62,7 @@ function procedural_dungeon_setup() {
   var hamster_builder = new HamsterSpriteBuilder();
   hamster_builder.createPlayable();
   Player.set_position(212, 212);
-  var hearts = hamster_builder.createHealthBar(5);
+  hearts = hamster_builder.createHealthBar(5);
   var rat = hamster_builder.createRat();
   rat.set_position(128, 128);
   npcs.push(rat);
@@ -75,13 +75,13 @@ function neighborhood_1_setup() {
   map_builder.neighborhood_1();
   var hamster_builder = new HamsterSpriteBuilder();
   hamster_builder.createPlayable();
-
   requestAnimationFrame(gameLoop);
 }
 
 
 
 function gameLoop(){
+  hearts.forEach(heart => heart.animate(scene));
   npcs.forEach(npc => npc.move());
   scene.render();
   

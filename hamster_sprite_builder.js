@@ -52,12 +52,15 @@ function HamsterSpriteBuilder() {
 		let u = new SpriteUtilities(PIXI);
 		for (var i = 0; i < healthCount; i++)
 		{
-			var sprite = new Heart(0, i * TILEHEIGHT);
+			var sprite = new Heart(i * TILEWIDTH, 32);
 			sprite.width = 32;
 			sprite.height = 32;
 			sprite.add_animation('heart', u.sprite(u.filmstrip('heart', 32, 32)));
 			sprite.set_current_animation('heart');
-			sprite.animate(scene, id);
+			sprite.current_animation.y = sprite.x;
+	    	sprite.current_animation.x = sprite.y;
+			sprite.animate(scene);
+			hearts.push(sprite);
 		}
 		return hearts;
 	}

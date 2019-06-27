@@ -5,6 +5,8 @@ function Heart(_x, _y) {
 	this.animations = {
 		'heart': undefined
 	};
+	
+	this.move = function() {}
 }
 
 function HeartDisplay()
