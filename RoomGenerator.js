@@ -94,6 +94,19 @@ exports.generateMap = function(numRooms)
 		}
 	}
 	map = exports.ReplaceUndefinedItems(map, 0);
+	for (var i = 0; i < map[0].length; i++)
+	{
+		map[0][i] = 0;
+	}
+	for (var i = 0; i < map.length; i++)
+	{
+		map[i][0] = 0;
+		map[i][map[i].length - 1] = 0;
+	}
+	for (var i = 0; i < map[map.length - 1].length; i++)
+	{
+		map[map.length - 1][i] = 0;
+	}
 	return { atlas: map, doorCoordinates: doorCoordinates[0]} ;
 }
 
