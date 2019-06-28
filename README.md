@@ -1,6 +1,6 @@
 # space_hamster
 
-This is a prototype for a 2D Top-Down RPG-Style game using fan spritesheets for the Hamtaro franchise.
+This is a prototype for a 2D Top-Down RPG-Style game using fan-made spritesheets for the Hamtaro franchise.
 
 # How to Run
 
