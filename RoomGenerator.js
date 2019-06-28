@@ -75,7 +75,6 @@ exports.generateMap = function(numRooms)
 			}
 		}
 		rooms.push(exports.Room(x, y, width, length));
-
 		for (var _y = y; _y < y + length; _y++)
 		{
 			if (_y >= map.length) map.push([]);

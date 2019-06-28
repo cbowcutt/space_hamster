@@ -33,7 +33,7 @@ function procedural_dungeon_setup() {
   map_builder.procedural_dungeon();
   var hamster_builder = new HamsterSpriteBuilder();
   hamster_builder.createPlayable();
-  Player.set_position(212, 212);
+  Player.set_position(1 * TILEWIDTH, 1 * TILEHEIGHT);
   hearts = hamster_builder.createHealthBar(5);
   var rat = hamster_builder.createRat();
   rat.set_position(128, 128);
@@ -111,8 +111,14 @@ function check_door_activations() {
 function check_enemy_collision(enemy) {
 	if (intersects(Player.current_animation, enemy.current_animation))
 	{
-		var s = hearts.pop();
-		scene.remove(s);
+		if (Player.CanTakeDamage)
+		{
+			var s = hearts.pop();
+			s.remove_current_animation_from_canvas()
+			scene.remove(s);
+			Player.MakeInvincible(4000);
+		}
+
 	}
 }
 

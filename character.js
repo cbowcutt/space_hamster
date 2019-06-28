@@ -1,12 +1,21 @@
 function Character() {
 	Animatable.call(this);
 	this.speed = 5;
+	
+	this.CanTakeDamage = true;
 
 	this.animations = {
 		'walking_left': undefined,
 		'walking_right': undefined,
 		'walking_up': undefined,
 		'walking_down': undefined
+	};
+	
+	this.MakeInvincible = function(time) {
+		this.CanTakeDamage = false;
+		setTimeout(() => {
+			this.CanTakeDamage = true;
+		}, time);
 	};
 
 	this.move = function(keyCode) {
