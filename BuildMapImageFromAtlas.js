@@ -7,18 +7,25 @@ function BuildCanvasFromAtlas(map, tileDictionary, tileWidth, tileHeight)
 	c.hidden = true;
 	c.Id = "mapCanvas";
 	var ctx = c.getContext("2d");
+	var imageGround = document.getElementById("dungeonA");
+	var dungeonGround = ctx.createPattern(imageGround, "repeat");
 	for (var x = 0; x < mapWidth; x++)
 	{
 		for (var y = 0 ; y < map.length; y++)
 		{
-			ctx.fillStyle = "blue";
+			
+			
 			if (map[y][x] == 1)
 			{
-				ctx.fillStyle = "red";
+				ctx.fillStyle = dungeonGround;
 			}
-			if (map[y][x] == 2)
+			else if (map[y][x] == 2)
 			{
-				ctx.fillStyle = "green";
+				ctx.fillStyle = "black";
+			}
+			else
+			{
+				ctx.fillStyle = "black";
 			}
 			ctx.fillRect(x * tileWidth, y * tileHeight, tileWidth, tileHeight);
 		}
