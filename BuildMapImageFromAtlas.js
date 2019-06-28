@@ -9,6 +9,9 @@ function BuildCanvasFromAtlas(map, tileDictionary, tileWidth, tileHeight)
 	var ctx = c.getContext("2d");
 	var imageGround = document.getElementById("dungeonA");
 	var dungeonGround = ctx.createPattern(imageGround, "repeat");
+	
+	var imageHole = document.getElementById("dungeonHole");
+	var imageHole = ctx.createPattern(imageHole, "repeat");
 	for (var x = 0; x < mapWidth; x++)
 	{
 		for (var y = 0 ; y < map.length; y++)
@@ -21,7 +24,7 @@ function BuildCanvasFromAtlas(map, tileDictionary, tileWidth, tileHeight)
 			}
 			else if (map[y][x] == 2)
 			{
-				ctx.fillStyle = "black";
+				ctx.fillStyle = imageHole;
 			}
 			else
 			{
