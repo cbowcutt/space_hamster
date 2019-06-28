@@ -49,6 +49,10 @@ function Character() {
 	    	dy = this.speed;
 	    	new_animation_id = 'walking_down';
 	    }
+		if (this.CanTakeDamage == false)
+		{
+			new_animation_id += "_hurt";
+		}
 
 	    var new_boundary = {
 	    	x: current_x + dx,

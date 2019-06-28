@@ -27,6 +27,10 @@ function HamsterSpriteBuilder() {
 		hamster_sprite.add_animation('walking_left', u.sprite(u.filmstrip('hamster_left', 128,128)));
 		hamster_sprite.add_animation('walking_up', u.sprite(u.filmstrip('hamster_up', 128, 128)));
 		hamster_sprite.add_animation('walking_right', u.sprite(u.filmstrip('hamster_right', 128, 128)));
+		hamster_sprite.add_animation('walking_down_hurt', u.sprite(u.filmstrip('hamster_down_hurt', 128, 128)));
+		hamster_sprite.add_animation('walking_left_hurt', u.sprite(u.filmstrip('hamster_left_hurt', 128,128)));
+		hamster_sprite.add_animation('walking_up_hurt', u.sprite(u.filmstrip('hamster_up_hurt', 128, 128)));
+		hamster_sprite.add_animation('walking_right_hurt', u.sprite(u.filmstrip('hamster_right_hurt', 128, 128)));
 		hamster_sprite.set_current_animation('walking_down');
 		hamster_sprite.animate(scene, id);
 		Player = hamster_sprite;
