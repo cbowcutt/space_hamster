@@ -81,10 +81,11 @@ function neighborhood_1_setup() {
 
 
 function gameLoop(){
-  hearts.forEach(heart => heart.animate(scene));
+
   npcs.forEach(npc => npc.move());
+  move_hearts();
   scene.render();
-  
+
   check_door_activations(Player);
   requestAnimationFrame(gameLoop);
 };
@@ -105,6 +106,22 @@ window.onload = function() {
       .load(procedural_dungeon_setup);
 }
 
+function move_hearts()
+{
+    for (var i = 0; i < hearts.length; i++)
+    {
+      var sprite = hearts[i];
+      sprite.x = -scene.stage.position.x + i * 32;
+      sprite.y = -scene.stage.position.y; 
+
+      sprite.width = 32;
+      sprite.height = 32;
+      sprite.set_current_animation('heart');
+      sprite.current_animation.y = sprite.y;
+      sprite.current_animation.x = sprite.x;
+      sprite.animate(scene);
+    }
+}
 
 
 
