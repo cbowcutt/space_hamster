@@ -12,6 +12,8 @@ var Player = undefined;
 var CurrentMap = undefined;
 
 var npcs = []
+
+var coins = [];
 var hearts;
 
 
@@ -36,6 +38,8 @@ function procedural_dungeon_setup() {
   Player.set_position(1 * TILEWIDTH, 1 * TILEHEIGHT);
   hearts = hamster_builder.createHealthBar(5);
   var rat = hamster_builder.createRat();
+  var coin = hamster_builder.createCoin(3, 3);
+  coins.push(coin);
   rat.set_position(128, 128);
   npcs.push(rat);
   requestAnimationFrame(gameLoop);
@@ -56,9 +60,12 @@ function gameLoop(){
 
   npcs.forEach(npc => npc.move());
   npcs.forEach(npc => check_enemy_collision(npc));
+  check_coin_collision();
   move_hearts();
+  check_coin_collision();
+  animateCoins();
   scene.render();
- 
+
   check_door_activations(Player);
   requestAnimationFrame(gameLoop);
 };
@@ -80,7 +87,25 @@ window.onload = function() {
       .add('neighborhood_1', 'images/neighborhood_1.png')
       .add('inside_home', 'images/inside_home.png')
 	  .add('heart', 'images/heart.png')
+	  .add('coin_1', 'images/goldCoin1.png')
+	  .add('coin_2', 'images/goldCoin2.png')
+	  .add('coin_3', 'images/goldCoin3.png')
+	  .add('coin_4', 'images/goldCoin4.png')
+	  .add('coin_5', 'images/goldCoin5.png')
+	  .add('coin_6', 'images/goldCoin6.png')
+	  .add('coin_7', 'images/goldCoin7.png')
       .load(procedural_dungeon_setup);
+}
+
+function animateCoins()
+{
+	for (var i = 0; i < coins.length; i++)
+	{
+		var sprite = coins[i];
+		sprite.current_animation.x = sprite.x;
+		sprite.current_animation.y = sprite.y;
+		sprite.animate(scene);
+	}
 }
 
 function move_hearts()
@@ -124,6 +149,25 @@ function check_enemy_collision(enemy) {
 		}
 
 	}
+}
+
+function check_coin_collision() {
+	var removeAtIndex = [];
+	for (var i = 0; i < coins.length; i++)
+	{
+		if (intersects(Player.current_animation, coins[i].current_animation))
+		{
+			removeAtIndex.push(i);
+		}
+	}
+	for (var i = 0; i < removeAtIndex.length; i++)
+	{
+		var s = coins[removeAtIndex[i]];
+		s.remove_current_animation_from_canvas()
+		scene.remove(s);
+		coins = coins.filter(c => coins.indexOf(c) != removeAtIndex[i]);
+	}
+
 }
 
 
