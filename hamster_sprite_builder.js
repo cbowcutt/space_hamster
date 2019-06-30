@@ -95,6 +95,8 @@ function HamsterSpriteBuilder() {
 		}
 		return hearts;
 	}
+	
+	
 
 
 }

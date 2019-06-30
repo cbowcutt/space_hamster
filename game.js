@@ -17,6 +17,7 @@ var coins = [];
 
 var wallet = 0;
 var hearts;
+var walletIcon;
 
 var sword;
 
@@ -39,12 +40,13 @@ function procedural_dungeon_setup() {
   map_builder.procedural_dungeon(10);
   var hamster_builder = new HamsterSpriteBuilder();
   hamster_builder.createPlayable();
-  Player.set_position(1 * TILEWIDTH, 1 * TILEHEIGHT);
+  Player.set_position(5 * TILEWIDTH, 5 * TILEHEIGHT);
   sword = hamster_builder.createSword(Player);
   hearts = hamster_builder.createHealthBar(5);
   var rat = hamster_builder.createRat();
   var coin = hamster_builder.createCoin(3, 3);
   coins.push(coin);
+  walletIcon = hamster_builder.createCoin(2, 2);
   rat.set_position(128, 128);
   npcs.push(rat);
   requestAnimationFrame(gameLoop);
@@ -66,6 +68,7 @@ function gameLoop(){
   npcs.forEach(npc => npc.move());
   npcs = npcs.map(npc => check_enemy_collision(npc)).filter(npc => npc != null);
   check_coin_collision();
+  move_wallet();
   move_hearts();
   check_coin_collision();
   animateCoins();
@@ -132,6 +135,17 @@ function move_hearts()
     }
 }
 
+function move_wallet()
+{
+	walletIcon.x = -scene.stage.position.x;
+	walletIcon.y = -scene.stage.position.y + (TILEHEIGHT);
+	walletIcon.width = 64;
+	walletIcon.height = 64;
+	walletIcon.current_animation.y = walletIcon.y;
+	walletIcon.current_animation.x = walletIcon.x;
+	walletIcon.animate(scene);
+}
+
 
 
 function check_door_activations() {
@@ -181,8 +195,9 @@ function check_coin_collision() {
 		coins = coins.filter(c => coins.indexOf(c) != removeAtIndex[i]);
 	}
 	wallet += removeAtIndex.length;
-
 }
+
+
 
 
 function intersects(rect1, rect2) {
