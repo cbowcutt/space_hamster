@@ -13,35 +13,9 @@ var CurrentMap = undefined;
 
 var npcs = []
 
+var coins = [];
+var hearts;
 
-
-// function upstairs_setup() {
-
-//   tile_map = inside_home_tilemap;
-//       // add the hamster
-//   hamster_texture = PIXI.utils.TextureCache["images/pikachu.png"];
-//   player_sprite = new PIXI.Sprite(hamster_texture);
-//   player_sprite.height = 16 * 4;
-//   player_sprite.width = 16 * 4;
-//   player_sprite.vx = 0;
-//   player_sprite.vy = 0;
-//   player_sprite.x = 384;
-//   player_sprite.y = 384;
-
-//   var background_texture = PIXI.utils.TextureCache["images/inside_home.png"];
-
-// 	scene.add(new PIXI.Sprite(background_texture));
-// 	scene.add(player_sprite);
-
-
-//   var neighborhood_door = new Door(9 * TILEHEIGHT, 8 * TILEWIDTH);
-//   var neighborhood_door = new Door(10 * TILEHEIGHT, 8 * TILEWIDTH);
-//   neighborhood_door.setup_new_state = function() { neighborhood_1_setup(); }
-
-//   doors.push(neighborhood_door);
-//   // doors.add(neighborhood_door);
-// 	gameLoop();
-// }
 
 function inside_home_setup() {
   var map_builder = new MapBuilder();
@@ -61,8 +35,11 @@ function procedural_dungeon_setup() {
   map_builder.procedural_dungeon();
   var hamster_builder = new HamsterSpriteBuilder();
   hamster_builder.createPlayable();
-  Player.set_position(212, 212);
+  Player.set_position(1 * TILEWIDTH, 1 * TILEHEIGHT);
+  hearts = hamster_builder.createHealthBar(5);
   var rat = hamster_builder.createRat();
+  var coin = hamster_builder.createCoin(3, 3);
+  coins.push(coin);
   rat.set_position(128, 128);
   npcs.push(rat);
   requestAnimationFrame(gameLoop);
@@ -74,16 +51,21 @@ function neighborhood_1_setup() {
   map_builder.neighborhood_1();
   var hamster_builder = new HamsterSpriteBuilder();
   hamster_builder.createPlayable();
-
   requestAnimationFrame(gameLoop);
 }
 
 
 
 function gameLoop(){
+
   npcs.forEach(npc => npc.move());
+  npcs.forEach(npc => check_enemy_collision(npc));
+  check_coin_collision();
+  move_hearts();
+  check_coin_collision();
+  animateCoins();
   scene.render();
-  
+
   check_door_activations(Player);
   requestAnimationFrame(gameLoop);
 };
@@ -94,15 +76,54 @@ window.onload = function() {
       .add('hamster_right', 'images/hamster_right.png')
       .add('hamster_up', 'images/hamster_up.png')
       .add('hamster_down', 'images/hamster_down.png')
+	  .add('hamster_left_hurt', 'images/hamster_left_hurt.png')
+      .add('hamster_right_hurt', 'images/hamster_right_hurt.png')
+      .add('hamster_up_hurt', 'images/hamster_up_hurt.png')
+      .add('hamster_down_hurt', 'images/hamster_down_hurt.png')
 	  .add('rat_left', 'images/rat_left.png')
       .add('rat_right', 'images/rat_right.png')
       .add('rat_up', 'images/rat_up.png')
       .add('rat_down', 'images/rat_down.png')
       .add('neighborhood_1', 'images/neighborhood_1.png')
       .add('inside_home', 'images/inside_home.png')
+	  .add('heart', 'images/heart.png')
+	  .add('coin_1', 'images/goldCoin1.png')
+	  .add('coin_2', 'images/goldCoin2.png')
+	  .add('coin_3', 'images/goldCoin3.png')
+	  .add('coin_4', 'images/goldCoin4.png')
+	  .add('coin_5', 'images/goldCoin5.png')
+	  .add('coin_6', 'images/goldCoin6.png')
+	  .add('coin_7', 'images/goldCoin7.png')
       .load(procedural_dungeon_setup);
 }
 
+function animateCoins()
+{
+	for (var i = 0; i < coins.length; i++)
+	{
+		var sprite = coins[i];
+		sprite.current_animation.x = sprite.x;
+		sprite.current_animation.y = sprite.y;
+		sprite.animate(scene);
+	}
+}
+
+function move_hearts()
+{
+    for (var i = 0; i < hearts.length; i++)
+    {
+      var sprite = hearts[i];
+      sprite.x = -scene.stage.position.x + i * 32;
+      sprite.y = -scene.stage.position.y; 
+
+      sprite.width = 32;
+      sprite.height = 32;
+      sprite.set_current_animation('heart');
+      sprite.current_animation.y = sprite.y;
+      sprite.current_animation.x = sprite.x;
+      sprite.animate(scene);
+    }
+}
 
 
 
@@ -114,6 +135,39 @@ function check_door_activations() {
       current_door.setup_new_state();
     }
   }
+}
+
+function check_enemy_collision(enemy) {
+	if (intersects(Player.current_animation, enemy.current_animation))
+	{
+		if (Player.CanTakeDamage)
+		{
+			var s = hearts.pop();
+			s.remove_current_animation_from_canvas()
+			scene.remove(s);
+			Player.MakeInvincible(4000);
+		}
+
+	}
+}
+
+function check_coin_collision() {
+	var removeAtIndex = [];
+	for (var i = 0; i < coins.length; i++)
+	{
+		if (intersects(Player.current_animation, coins[i].current_animation))
+		{
+			removeAtIndex.push(i);
+		}
+	}
+	for (var i = 0; i < removeAtIndex.length; i++)
+	{
+		var s = coins[removeAtIndex[i]];
+		s.remove_current_animation_from_canvas()
+		scene.remove(s);
+		coins = coins.filter(c => coins.indexOf(c) != removeAtIndex[i]);
+	}
+
 }
 
 

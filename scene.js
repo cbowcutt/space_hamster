@@ -39,7 +39,7 @@ var Scene = function(_width, _height, canvasId) {
 		this.height = _height;
 		this.stage = new PIXI.Container();
 		this.renderer = PIXI.autoDetectRenderer((_width, _height), document.getElementById(canvasId));
-		this.renderer.backgroundColor = 0xFFFFFF;
+		this.renderer.backgroundColor = 0x0;
 		this.renderer.view.style.border = "1px dashed black";
 
 		this.sprites = {};

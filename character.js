@@ -1,12 +1,21 @@
 function Character() {
 	Animatable.call(this);
 	this.speed = 5;
+	
+	this.CanTakeDamage = true;
 
 	this.animations = {
 		'walking_left': undefined,
 		'walking_right': undefined,
 		'walking_up': undefined,
 		'walking_down': undefined
+	};
+	
+	this.MakeInvincible = function(time) {
+		this.CanTakeDamage = false;
+		setTimeout(() => {
+			this.CanTakeDamage = true;
+		}, time);
 	};
 
 	this.move = function(keyCode) {
@@ -40,6 +49,10 @@ function Character() {
 	    	dy = this.speed;
 	    	new_animation_id = 'walking_down';
 	    }
+		if (this.CanTakeDamage == false)
+		{
+			new_animation_id += "_hurt";
+		}
 
 	    var new_boundary = {
 	    	x: current_x + dx,
@@ -64,62 +77,27 @@ function PlayableCharacter(){
 	Character.call(this);
 }
 
+function Health(maxHearts)
+{
+	this.MaxHearts = maxHearts;
+	this.HeldHearts = maxHearts;
+	
+	Animatable.call(this);
+	
+	this.move = function() {
+	for (var i = 0; i < hearts.length; i++)
+    {
+      var sprite = hearts[i];
+      sprite.x = -scene.stage.position.x + i * 32;
+      sprite.y = -scene.stage.position.y; 
 
-
-
-	// this.moveLeft = function() { 
-	// 	var current_x = this.current_animation.x;
-	// 	var current_y = this.current_animation.y;
-	// 	this.remove_current_animation_from_canvas();
-	// 	this.set_current_animation('walking_left');
-	// 	this.current_animation.y =  current_y;
-	// 	this.current_animation.x =  current_x - this.speed;
-	// 	scene.stage.position.x += Player.speed;
-	// 	if(detect_collisions()) {
-	// 		this.current_animation.x = current_x;
-	// 		scene.stage.position.x -= Player.speed;
-	// 	}
-	// 	this.animate(scene);
-	// }
-	// this.moveRight = function() { 
-	// 	var current_x = this.current_animation.x;
-	// 	var current_y = this.current_animation.y;
-	// 	this.remove_current_animation_from_canvas();
-	// 	this.set_current_animation('walking_right');
-	// 	this.current_animation.y =  current_y;
-	// 	this.current_animation.x =  current_x + this.speed;
-	// 	scene.stage.position.x -= Player.speed;
-	// 	if(detect_collisions()) {
-	// 		this.current_animation.x = current_x;
-	// 		scene.stage.position.x += Player.speed;
-	// 	}
-	// 	this.animate(scene);
-	// }
-	// this.moveUp = function(){
-	// 	var current_x = this.current_animation.x;
-	// 	var current_y = this.current_animation.y;
-	// 	this.remove_current_animation_from_canvas();
-	// 	this.set_current_animation('walking_up');
-	// 	this.current_animation.y =  current_y - this.speed;
-	// 	this.current_animation.x =  current_x;
-	// 	scene.stage.position.y += Player.speed;
-	// 	if(detect_collisions()) {
-	// 		this.current_animation.y = current_y;
-	// 		scene.stage.position.y -= Player.speed;
-	// 	}
-	// 	this.animate(scene);
-	// }
-	// this.moveDown = function(){
-	// 	var current_x = this.current_animation.x;
-	// 	var current_y = this.current_animation.y;
-	// 	this.remove_current_animation_from_canvas();
-	// 	this.set_current_animation('walking_down');
-	// 	this.current_animation.y =  current_y + this.speed;
-	// 	this.current_animation.x =  current_x;
-	// 	scene.stage.position.y -= Player.speed;
-	// 	if(detect_collisions()) {
-	// 		this.current_animation.y = current_y;
-	// 		scene.stage.position.y += Player.speed;
-	// 	}
-	// 	this.animate(scene);
-	// }
+      sprite.width = 32;
+      sprite.height = 32;
+      sprite.set_current_animation('heart');
+      sprite.current_animation.y = sprite.y;
+      sprite.current_animation.x = sprite.x;
+      sprite.animate(scene);
+    }
+	
+	}  
+}
