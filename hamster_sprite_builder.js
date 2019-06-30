@@ -32,6 +32,7 @@ function HamsterSpriteBuilder() {
 		hamster_sprite.add_animation('walking_up_hurt', u.sprite(u.filmstrip('hamster_up_hurt', 128, 128)));
 		hamster_sprite.add_animation('walking_right_hurt', u.sprite(u.filmstrip('hamster_right_hurt', 128, 128)));
 		hamster_sprite.set_current_animation('walking_down');
+		hamster_sprite.current_animation_id = "walking_down";
 		hamster_sprite.animate(scene, id);
 		Player = hamster_sprite;
 	}
@@ -47,6 +48,7 @@ function HamsterSpriteBuilder() {
 		sprite.add_animation('walking_up', u.sprite(u.filmstrip('rat_up', 32, 32)));
 		sprite.add_animation('walking_right', u.sprite(u.filmstrip('rat_right', 32, 32)));
 		sprite.set_current_animation('walking_down');
+
 		sprite.animate(scene, id);
 		return sprite;
 	}
@@ -60,6 +62,18 @@ function HamsterSpriteBuilder() {
 		let texture = u.frame("coin_1", 0, 0, 32, 32);
 		sprite.add_animation("spinningCoin", u.sprite(u.filmstrip("coin_1", 32, 32)));
 		sprite.set_current_animation('spinningCoin');
+		sprite.animate(scene);
+		return sprite;
+	}
+	
+	this.createSword = function(character)
+	{
+		let u = new SpriteUtilities(PIXI);
+		var sprite = new Weapon(character);
+		sprite.width = 32;
+		sprite.height = 32;
+		let texture = u.frame("sword", 0, 0, 32, 32);
+		sprite.add_animation("swing", u.sprite(u.filmstrip("sword", 32, 32)));
 		sprite.animate(scene);
 		return sprite;
 	}

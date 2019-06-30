@@ -24,9 +24,14 @@ window.addEventListener('keydown', function(event) {
     var RIGHT = 39;
     var UP = 38;
     var DOWN = 40;
-    if(event.keyCode == LEFT || RIGHT || UP || DOWN) {
+	var SPACE = 32;
+    if(event.keyCode == LEFT || event.keyCode == RIGHT || event.keyCode == UP || event.keyCode == DOWN) {
       Player.move(event.keyCode);
-    }}, false);
+    }
+	if (event.keyCode == SPACE) {
+		sword.move(event.keyCode);
+	}
+	}, false);
 
 
 

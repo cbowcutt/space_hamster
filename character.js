@@ -17,6 +17,8 @@ function Character() {
 			this.CanTakeDamage = true;
 		}, time);
 	};
+	
+	this.current_animation_id;
 
 	this.move = function(keyCode) {
 		var LEFT = 37;
@@ -31,7 +33,6 @@ function Character() {
 
 	    var dx = 0;
 	    var dy = 0;
-
 
 	    if(keyCode == LEFT) { 
 	    	dx = -this.speed;
@@ -53,6 +54,8 @@ function Character() {
 		{
 			new_animation_id += "_hurt";
 		}
+		
+		this.current_animation_id = new_animation_id;
 
 	    var new_boundary = {
 	    	x: current_x + dx,

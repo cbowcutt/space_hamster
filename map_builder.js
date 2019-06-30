@@ -51,10 +51,10 @@ function MapBuilder() {
 		CurrentMap = map;
 	}
 	
-	this.procedural_dungeon = function()
+	this.procedural_dungeon = function(roomCount)
 	{
 		var map = new Map();
-		var tuple = generator.generateMap(3);
+		var tuple = generator.generateMap(roomCount);
 		map.atlas = tuple.atlas;
 		var doorCoordinates = tuple.doorCoordinates
 		map.background = new PIXI.Sprite(PIXI.Texture.fromCanvas(BuildCanvasFromAtlas(map.atlas, null, TILEWIDTH, TILEHEIGHT)));
