@@ -64,7 +64,7 @@ function neighborhood_1_setup() {
 function gameLoop(){
 
   npcs.forEach(npc => npc.move());
-  npcs.forEach(npc => check_enemy_collision(npc));
+  npcs = npcs.map(npc => check_enemy_collision(npc)).filter(npc => npc != null);
   check_coin_collision();
   move_hearts();
   check_coin_collision();
@@ -114,6 +114,7 @@ function animateCoins()
 	}
 }
 
+
 function move_hearts()
 {
     for (var i = 0; i < hearts.length; i++)
@@ -153,8 +154,14 @@ function check_enemy_collision(enemy) {
 			scene.remove(s);
 			Player.MakeInvincible(4000);
 		}
-
 	}
+	if (sword.current_animation != undefined && intersects(sword.current_animation, enemy.current_animation))
+	{
+		enemy.remove_current_animation_from_canvas()
+		scene.remove(enemy);
+		enemy = null;
+	}
+	return enemy;
 }
 
 function check_coin_collision() {
