@@ -15,6 +15,8 @@ var npcs = []
 
 var coins = [];
 
+var doors = []
+
 var wallet = 0;
 var hearts;
 var walletIcon;
@@ -38,6 +40,7 @@ function procedural_dungeon_setup() {
   scene.reset();
   var map_builder = new MapBuilder();
   map_builder.procedural_dungeon(10);
+
   var hamster_builder = new HamsterSpriteBuilder();
   hamster_builder.createPlayable();
   Player.set_position(5 * TILEWIDTH, 5 * TILEHEIGHT);
@@ -103,6 +106,7 @@ window.onload = function() {
 	  .add('coin_6', 'images/goldCoin6.png')
 	  .add('coin_7', 'images/goldCoin7.png')
 	  .add('sword', 'images/sword.png')
+	  .add('doors', 'images/dungeonHole.png')
       .load(procedural_dungeon_setup);
 }
 

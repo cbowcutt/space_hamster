@@ -81,6 +81,15 @@ function HamsterSpriteBuilder() {
 		return hearts;
 	}
 	
+	this.createDoor = function(x, y, transition)
+	{
+		let u = new SpriteUtilities(PIXI);
+		var sprite = new Door(x, y, transition);
+		var animations = {"door": u.sprite(u.filmstrip("doors", 32, 32))};
+		sprite = configAnimatable(sprite, 32, 32, animations, "door");
+		return sprite;
+	}
+	
 	function configAnimatable(sprite, width, height, animations, currentAnimation)
 	{
 		sprite.width = width;

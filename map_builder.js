@@ -56,11 +56,14 @@ function MapBuilder() {
 		var map = new Map();
 		var tuple = generator.generateMap(roomCount);
 		map.atlas = tuple.atlas;
+		map.atlas[2][2] = 2;
 		var doorCoordinates = tuple.doorCoordinates
 		map.background = new PIXI.Sprite(PIXI.Texture.fromCanvas(BuildCanvasFromAtlas(map.atlas, null, TILEWIDTH, TILEHEIGHT)));
 		// map.background.width /= 2.0;
 		// map.background.height /= 2.0;
 		map.doors.push(new Door(doorCoordinates[0], doorCoordinates[1], procedural_dungeon_setup));
+
+		map.doors.push(new Door(2, 2, neighborhood_1_setup));
 		scene.add(map.background);
 		CurrentMap = map;
 	}
