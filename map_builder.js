@@ -15,9 +15,25 @@ function MapBuilder() {
 
 	this.neighborhood_1 = function() {
 		var map = new Map();
-		map.background = new PIXI.Sprite(PIXI.loader.resources.neighborhood_1.texture);
-		map.background.width /= 2.0;
-		map.background.height /= 2.0;
+		map.atlas = [];
+		for( var i = 0; i < 20; i++)
+		{
+			map.atlas.push([])
+			for (var j = 0; j < 20; j++)
+			{
+				map.atlas[i].push(0);
+			}
+			for (var j = 8; j < 12; j++)
+			{
+				map.atlas[i][j] = 1;
+			}
+		}
+		var tileDictionary = {
+			1: "gray",
+			0: "green"
+		}
+		
+		map.background = new PIXI.Sprite(PIXI.Texture.fromCanvas(BuildCanvas(map.atlas, tileDictionary, TILEWIDTH, TILEHEIGHT)));
 		scene.add(map.background);
 		CurrentMap = map;
 	}
