@@ -40,16 +40,9 @@ function HamsterSpriteBuilder() {
 	
 	this.createRat = function(name, id) {
 		let u = new SpriteUtilities(PIXI);
-		var sprite = new RatNPC();
-		
-		var animations = {
-			"walking_down" : u.sprite(u.filmstrip('rat_down', 32, 32)),
-			"walking_left" : u.sprite(u.filmstrip('rat_left', 32,32)),
-			"walking_up"   : u.sprite(u.filmstrip('rat_up', 32, 32)),
-			"walking_right": u.sprite(u.filmstrip('rat_right', 32, 32))
-		};
-		
-		sprite = configAnimatable(sprite, 32, 32, animations, "walking_down");
+		var sprite = new Rat(u);
+		sprite.set_current_animation("walking_down");
+		sprite.animate(scene);
 		return sprite;
 	}
 	
