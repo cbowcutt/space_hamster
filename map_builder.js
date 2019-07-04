@@ -21,11 +21,11 @@ function MapBuilder() {
 			map.atlas.push([])
 			for (var j = 0; j < 20; j++)
 			{
-				map.atlas[i].push(0);
+				map.atlas[i].push(1);
 			}
 			for (var j = 8; j < 12; j++)
 			{
-				map.atlas[i][j] = 1;
+				map.atlas[i][j] = 0;
 			}
 		}
 		var tileDictionary = {

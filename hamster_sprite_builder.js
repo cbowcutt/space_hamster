@@ -45,6 +45,16 @@ function HamsterSpriteBuilder() {
 		sprite.animate(scene);
 		return sprite;
 	}
+
+	this.createHome = function(x, y)
+	{
+		let u = new SpriteUtilities(PIXI);
+		var sprite = new Home(u, x, y);
+		sprite.set_current_animation("static");
+		sprite.animate(scene);
+		return sprite;
+	}
+	
 	
 	this.createCoin = function(x, y)
 	{
@@ -82,7 +92,8 @@ function HamsterSpriteBuilder() {
 		sprite = configAnimatable(sprite, 32, 32, animations, "door");
 		return sprite;
 	}
-	
+
+
 	function configAnimatable(sprite, width, height, animations, currentAnimation)
 	{
 		sprite.width = width;

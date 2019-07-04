@@ -22,6 +22,7 @@ var hearts;
 var walletIcon;
 
 var sword;
+var home;
 
 
 function inside_home_setup() {
@@ -57,11 +58,24 @@ function procedural_dungeon_setup() {
 
 function neighborhood_1_setup() {
   // add the hamster
+  scene.reset();
   var map_builder = new MapBuilder();
   map_builder.neighborhood_1();
   var hamster_builder = new HamsterSpriteBuilder();
+
   hamster_builder.createPlayable();
-  requestAnimationFrame(gameLoop);
+  Player.set_position(5 * TILEWIDTH, 5 * TILEHEIGHT);
+  //   sword = hamster_builder.createSword(Player);
+  // hearts = hamster_builder.createHealthBar(5);
+  //   walletIcon = hamster_builder.createCoin(2, 2);
+    home = hamster_builder.createHome(6, 6);
+  requestAnimationFrame(neighborhoodLoop);
+}
+
+function neighborhoodLoop()
+{
+  scene.render();
+    requestAnimationFrame(neighborhoodLoop);
 }
 
 
@@ -107,7 +121,8 @@ window.onload = function() {
 	  .add('coin_7', 'images/goldCoin7.png')
 	  .add('sword', 'images/sword.png')
 	  .add('doors', 'images/dungeonHole.png')
-      .load(procedural_dungeon_setup);
+    .add('home', 'images/house.png')
+      .load(neighborhood_1_setup);
 }
 
 function animateCoins()
