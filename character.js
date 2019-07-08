@@ -26,7 +26,7 @@ function Character() {
 	    var UP = 38;
 	    var DOWN = 40;
 
-	    var new_animation_id = undefined;
+	    var new_animation_id = this.current_animation_id;
 
 	    var current_x = this.current_animation.x;
 	    var current_y = this.current_animation.y;
@@ -44,11 +44,11 @@ function Character() {
 	    }
 	    else if(keyCode == UP) {
 	    	dy = -this.speed;
-	    	new_animation_id = 'walking_up';
+	    	//new_animation_id = 'walking_up';
 	    }
 	    else if(keyCode == DOWN) {
 	    	dy = this.speed;
-	    	new_animation_id = 'walking_down';
+	    	//new_animation_id = 'walking_down';
 	    }
 		if (this.CanTakeDamage == false)
 		{
@@ -57,11 +57,12 @@ function Character() {
 		
 		this.current_animation_id = new_animation_id;
 
+
 	    var new_boundary = {
 	    	x: current_x + dx,
 	    	y: current_y + dy,
-	    	width: this.current_animation.width,
-	    	height: this.current_animation.height
+	    	width: 64,
+	    	height:64
 	    };
 
 	    if(!detect_collisions(new_boundary)) {
@@ -74,6 +75,17 @@ function Character() {
 	    	this.animate(scene);
 	    }
   }
+  
+  	this.animate = function(renderer) {
+	if (this.current_animation != undefined)
+	{
+		renderer.add(this.current_animation);
+		this.current_animation.animationSpeed = 0.15;
+		this.current_animation.width = 64;
+		this.current_animation.height = 64;
+		this.current_animation.play();
+	}
+	}
 }
 
 function PlayableCharacter(){

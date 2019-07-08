@@ -26,10 +26,8 @@ function HamsterSpriteBuilder() {
 		
 		var animations = {}
 		
-		animations['walking_down'] = u.sprite(u.filmstrip('hamster_down', 128, 128));
-		animations['walking_left'] = u.sprite(u.filmstrip('hamster_left', 128,128));
-		animations['walking_up'] = u.sprite(u.filmstrip('hamster_up', 128, 128));
-		animations['walking_right'] = u.sprite(u.filmstrip('hamster_right', 128, 128));
+		animations['walking_down'] = u.sprite(u.filmstrip('hamster_left', 700, 700));
+		animations['walking_left'] = u.sprite(u.filmstrip('hamster_left', 700, 700));
 		animations['walking_down_hurt'] = u.sprite(u.filmstrip('hamster_down_hurt', 128, 128));
 		animations['walking_left_hurt'] = u.sprite(u.filmstrip('hamster_left_hurt', 128,128));
 		animations['walking_up_hurt'] = u.sprite(u.filmstrip('hamster_up_hurt', 128, 128));
@@ -102,6 +100,15 @@ function HamsterSpriteBuilder() {
 		sprite.set_current_animation(currentAnimation);
 		sprite.animate(scene);
 		return sprite;
+	}
+
+	this.createGunForSale()
+	{
+		var weaponShopSprite = new WeaponShop();
+		var gunForSale = new ForSale("gun", 200, "just a basic gun");
+		configAnimatable(gunForSale, 128, 96, {"static": u.sprite(u.filmstrip("forSale", 128, 96)) }, "static");
+		weaponShopSprite.Items.push(gunForSale);
+		
 	}
 	
 	

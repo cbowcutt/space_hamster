@@ -72,10 +72,24 @@ function neighborhood_1_setup() {
   requestAnimationFrame(neighborhoodLoop);
 }
 
+function item_shop_setup()
+{
+	scene.reset();
+	var hamster_builder = new HamsterSpriteBuilder();
+	hamster_builder.createGunForSale();
+	requestAnimationFrame(itemShopLoop);
+}
+
 function neighborhoodLoop()
 {
-  scene.render();
+    scene.render();
     requestAnimationFrame(neighborhoodLoop);
+}
+
+function itemShopLoop()
+{
+	scene.render();
+	requestAnimationFrame(itemShopLoop();
 }
 
 
@@ -121,7 +135,9 @@ window.onload = function() {
 	  .add('coin_7', 'images/goldCoin7.png')
 	  .add('sword', 'images/sword.png')
 	  .add('doors', 'images/dungeonHole.png')
-    .add('home', 'images/house.png')
+	  .add('doors', 'images/dungeonHole.png')
+      .add('home', 'images/house.png')
+	  .add('forSale', 'images/forSaleDisplay.png');
       .load(neighborhood_1_setup);
 }
 
