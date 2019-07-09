@@ -28,6 +28,7 @@ function HamsterSpriteBuilder() {
 		
 		animations['walking_down'] = u.sprite(u.filmstrip('hamster_left', 700, 700));
 		animations['walking_left'] = u.sprite(u.filmstrip('hamster_left', 700, 700));
+		animations['walking_right'] = u.sprite(u.filmstrip('hamster_right', 700, 700));
 		animations['walking_down_hurt'] = u.sprite(u.filmstrip('hamster_down_hurt', 128, 128));
 		animations['walking_left_hurt'] = u.sprite(u.filmstrip('hamster_left_hurt', 128,128));
 		animations['walking_up_hurt'] = u.sprite(u.filmstrip('hamster_up_hurt', 128, 128));
@@ -98,16 +99,34 @@ function HamsterSpriteBuilder() {
 		sprite.height = height;
 		Object.keys(animations).forEach(key => sprite.add_animation(key, animations[key]));
 		sprite.set_current_animation(currentAnimation);
+		
 		sprite.animate(scene);
 		return sprite;
 	}
 
-	this.createGunForSale()
+	this.createItemShop = function()
 	{
-		var weaponShopSprite = new WeaponShop();
-		var gunForSale = new ForSale("gun", 200, "just a basic gun");
-		configAnimatable(gunForSale, 128, 96, {"static": u.sprite(u.filmstrip("forSale", 128, 96)) }, "static");
-		weaponShopSprite.Items.push(gunForSale);
+		let u = new SpriteUtilities(PIXI);
+		var weaponShopSprite = new WeaponShop(u);
+		configAnimatable(weaponShopSprite, 0, 0, {"static": u.sprite(u.filmstrip("weaponShop", 478, 320)) }, "static");
+
+		var popgunSprite = new Animatable();
+		popgunSprite.add_animation("static", u.sprite(u.filmstrip("popgun", 32, 32)));
+		popgunSprite.width = 32;
+		popgunSprite.height = 32;
+		weaponShopSprite.Items.push(popgunSprite);
+		var dagger = new Animatable();
+		dagger.add_animation("static", u.sprite(u.filmstrip("sword", 32, 32)));
+		dagger.width = 32;
+		dagger.height = 32;
+		weaponShopSprite.Items.push(dagger);
+		var heart = new Animatable();
+		heart.add_animation("static", u.sprite(u.filmstrip("heart", 32, 32)));
+		heart.width = 32;
+		heart.height = 32;
+		weaponShopSprite.Items.push(heart);
+		weaponShopSprite.animate(scene);
+
 		
 	}
 	

@@ -15,7 +15,6 @@ var npcs = []
 
 var coins = [];
 
-var doors = []
 
 var wallet = 0;
 var hearts;
@@ -76,7 +75,7 @@ function item_shop_setup()
 {
 	scene.reset();
 	var hamster_builder = new HamsterSpriteBuilder();
-	hamster_builder.createGunForSale();
+	hamster_builder.createItemShop();
 	requestAnimationFrame(itemShopLoop);
 }
 
@@ -89,7 +88,7 @@ function neighborhoodLoop()
 function itemShopLoop()
 {
 	scene.render();
-	requestAnimationFrame(itemShopLoop();
+	requestAnimationFrame(itemShopLoop);
 }
 
 
@@ -135,10 +134,10 @@ window.onload = function() {
 	  .add('coin_7', 'images/goldCoin7.png')
 	  .add('sword', 'images/sword.png')
 	  .add('doors', 'images/dungeonHole.png')
-	  .add('doors', 'images/dungeonHole.png')
       .add('home', 'images/house.png')
-	  .add('forSale', 'images/forSaleDisplay.png');
-      .load(neighborhood_1_setup);
+	  .add("weaponShop", "images/shop_template_with_creature478x320.png")
+	  .add('popgun', 'images/popgun.png')
+      .load(item_shop_setup);
 }
 
 function animateCoins()
@@ -184,9 +183,8 @@ function move_wallet()
 
 
 function check_door_activations() {
-  var doors = CurrentMap.doors;
-  for(var i = 0; i < doors.length; i++) {
-    current_door = doors[i];
+  for(var i = 0; i < CurrentMap.doors.length; i++) {
+    var current_door = CurrentMap.doors[i];
     if (intersects(Player.current_animation, current_door.rectangle)) {
       current_door.setup_new_state();
     }

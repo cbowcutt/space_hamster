@@ -22,6 +22,7 @@ function Animatable() {
 
 	this.set_current_animation = function(key) {
 		this.current_animation = this.animations[key];
+		this.current_animation_id = key;
 	};
 
 	this.animate = function(renderer) {
