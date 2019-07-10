@@ -84,6 +84,7 @@ function item_shop_setup()
 
 function neighborhoodLoop()
 {
+	SetupPlayerController();
     scene.render();
     requestAnimationFrame(neighborhoodLoop);
 }
@@ -279,5 +280,22 @@ function SetupMenuController()
 	else if(event.keyCode == RIGHT) {
       Menu.MoveSelection(1);
     }
+	}, false);
+}
+
+function SetupPlayerController()
+{
+	window.addEventListener('keydown', function(event) {
+    var LEFT = 37;
+    var RIGHT = 39;
+    var UP = 38;
+    var DOWN = 40;
+	var SPACE = 32;
+    if(event.keyCode == LEFT || event.keyCode == RIGHT || event.keyCode == UP || event.keyCode == DOWN) {
+      Player.move(event.keyCode);
+    }
+	if (event.keyCode == SPACE) {
+		sword.move(event.keyCode);
+	}
 	}, false);
 }
