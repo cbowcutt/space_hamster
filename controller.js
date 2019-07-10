@@ -19,7 +19,10 @@ var Key = {
   }
 };
 
-window.addEventListener('keydown', function(event) {
+
+function SetupPlayerController()
+{
+	window.addEventListener('keydown', function(event) {
     var LEFT = 37;
     var RIGHT = 39;
     var UP = 38;
@@ -32,6 +35,26 @@ window.addEventListener('keydown', function(event) {
 		sword.move(event.keyCode);
 	}
 	}, false);
+}
+
+function SetupMenuController()
+{
+	window.addEventListener('keydown', function(event) {
+    var LEFT = 37;
+    var RIGHT = 39;
+    var UP = 38;
+    var DOWN = 40;
+	var SPACE = 32;
+    if(event.keyCode == LEFT || event.keyCode == RIGHT || event.keyCode == UP || event.keyCode == DOWN) {
+      Menu.move(event.keyCode);
+    }
+	if (event.keyCode == SPACE) {
+		Menu.move(event.keyCode);
+	}
+	}, false);
+}
+
+
 
 
 

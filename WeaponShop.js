@@ -5,12 +5,20 @@ function WeaponShop()
 	this.width = 478;
 	this.height = 320;
 	
+	this.SelectedIndex = 0;
+	
 	this.CalculateImageCoordinateForItem = function(itemIndex)
 	{
 		var _x = 96 + ((itemIndex % 3) * 64);
 		var _y = 64 + (Math.floor(itemIndex / 3) * 96);
 		return { x: _x, y: _y};
 	}
+	
+	this.SetHighlightAnimation = function(sprite)
+	{
+		this.Highlight = sprite;
+	}
+	
 	
 	this.animate = function(renderer)
 	{
@@ -23,8 +31,17 @@ function WeaponShop()
 		var itemCount = this.Items.length;
 		for (var i = 0; i < itemCount; i++)
 		{
-			var coordinates = this.CalculateImageCoordinateForItem(i);
 			var itemSprite = this.Items[i];
+			var coordinates = this.CalculateImageCoordinateForItem(i);
+			if (i == this.SelectedIndex)
+			{
+				this.Highlight.current_animation.x = coordinates.x;
+				this.Highlight.current_animation.y = coordinates.y;
+				this.Highlight.current_animation.width = itemSprite.width;
+				this.Highlight.current_animation.height = itemSprite.height;
+				
+			}
+
 			itemSprite.set_current_animation("static");
 			itemSprite.current_animation.x = coordinates.x;
 			itemSprite.current_animation.y = coordinates.y;
@@ -34,6 +51,23 @@ function WeaponShop()
 			itemSprite.current_animation.play();
 			
 		}
+		renderer.add(this.Highlight.current_animation);
+		this.Highlight.current_animation.play();
+	}
+	
+	this.MoveSelection = function(delta)
+	{
+		this.SelectedIndex += delta;
+		if (this.SelectedIndex < 0 )
+		{
+			this.SelectedIndex = this.Items.length - 1;
+		}
+		else if (this.SelectedIndex > this.Items.length - 1)
+		{
+			this.SelectedIndex = 0;
+		}
+		
+		
 	}
 	
 }

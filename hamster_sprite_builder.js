@@ -103,11 +103,15 @@ function HamsterSpriteBuilder() {
 		sprite.animate(scene);
 		return sprite;
 	}
-
 	this.createItemShop = function()
 	{
 		let u = new SpriteUtilities(PIXI);
 		var weaponShopSprite = new WeaponShop(u);
+		
+		var highlightSprite = new Animatable();
+		highlightSprite.add_animation("static", u.sprite(u.filmstrip("highlight", 32, 32)));
+		highlightSprite.set_current_animation("static");		
+		weaponShopSprite.SetHighlightAnimation(highlightSprite);
 		configAnimatable(weaponShopSprite, 0, 0, {"static": u.sprite(u.filmstrip("weaponShop", 478, 320)) }, "static");
 
 		var popgunSprite = new Animatable();
@@ -125,8 +129,10 @@ function HamsterSpriteBuilder() {
 		heart.width = 32;
 		heart.height = 32;
 		weaponShopSprite.Items.push(heart);
-		weaponShopSprite.animate(scene);
 
+		weaponShopSprite.animate(scene);
+		
+		return weaponShopSprite;
 		
 	}
 	

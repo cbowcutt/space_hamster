@@ -22,6 +22,7 @@ var walletIcon;
 
 var sword;
 var home;
+var Menu;
 
 
 function inside_home_setup() {
@@ -56,6 +57,7 @@ function procedural_dungeon_setup() {
 }
 
 function neighborhood_1_setup() {
+  SetupPlayerController();
   // add the hamster
   scene.reset();
   var map_builder = new MapBuilder();
@@ -73,9 +75,10 @@ function neighborhood_1_setup() {
 
 function item_shop_setup()
 {
+	SetupMenuController();
 	scene.reset();
 	var hamster_builder = new HamsterSpriteBuilder();
-	hamster_builder.createItemShop();
+	Menu = hamster_builder.createItemShop();
 	requestAnimationFrame(itemShopLoop);
 }
 
@@ -87,6 +90,7 @@ function neighborhoodLoop()
 
 function itemShopLoop()
 {
+	Menu.animate(scene);
 	scene.render();
 	requestAnimationFrame(itemShopLoop);
 }
@@ -137,6 +141,7 @@ window.onload = function() {
       .add('home', 'images/house.png')
 	  .add("weaponShop", "images/shop_template_with_creature478x320.png")
 	  .add('popgun', 'images/popgun.png')
+	  .add('highlight', 'images/highlight_32x32.png')
       .load(item_shop_setup);
 }
 
@@ -259,3 +264,20 @@ function detect_collisions(subject_sprite) {
   return false;
 };
 
+
+function SetupMenuController()
+{
+	window.addEventListener('keydown', function(event) {
+    var LEFT = 37;
+    var RIGHT = 39;
+    var UP = 38;
+    var DOWN = 40;
+	var SPACE = 32;
+    if(event.keyCode == LEFT) {
+      Menu.MoveSelection(-1);
+    }
+	else if(event.keyCode == RIGHT) {
+      Menu.MoveSelection(1);
+    }
+	}, false);
+}
