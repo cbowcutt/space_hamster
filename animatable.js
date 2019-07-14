@@ -280,3 +280,31 @@ function Health(maxHearts)
     }
 	}
 }
+
+
+function Arrow(createSprite, _x, _y)
+{
+	Animatable.call(this);
+	this.width = 32;
+	this.height = 32;
+	this.x = _x;
+	this.y = _y;
+	this.animations = {
+		"static": createSprite("arrow", 100, 100)
+	}
+
+	this.animate = function(renderer)
+	{
+			if (this.current_animation != undefined)
+			{
+				renderer.add(this.current_animation);
+				this.current_animation.animationSpeed = 0.15;
+				this.current_animation.x = this.x;
+				this.current_animation.y = this.y;
+				this.current_animation.width = 32;
+				this.current_animation.height = 32;
+				this.current_animation.play();
+			}
+	}
+	this.set_current_animation("static")
+}

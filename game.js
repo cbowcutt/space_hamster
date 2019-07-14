@@ -154,6 +154,7 @@ window.onload = function() {
 	  .add('popgun', 'images/popgun.png')
 	  .add('highlight', 'images/highlight_32x32.png')
 	  .add('house_taco', 'images/house_taco_81x41.png')
+	  .add('arrow', 'images/arrow_100x100.png')
       .load(neighborhood_1_setup);
 }
 
@@ -279,18 +280,22 @@ function detect_collisions(subject_sprite) {
 };
 
 function menuController(event) {
-    var LEFT = 37;
-    var RIGHT = 39;
-    var UP = 38;
-    var DOWN = 40;
+  var LEFT = 37;
+  var RIGHT = 39;
+  var UP = 38;
+  var DOWN = 40;
   var SPACE = 32;
-    if(event.keyCode == LEFT) {
-      Menu.MoveSelection(-1);
-    }
-  else if(event.keyCode == RIGHT) {
-      Menu.MoveSelection(1);
-    }
+  if(event.keyCode == LEFT) {
+    Menu.MoveSelection(-1);
   }
+  else if(event.keyCode == RIGHT) {
+    Menu.MoveSelection(1);
+  }
+  else if (event.keyCode == DOWN || event.keyCode == UP)
+  {
+    Menu.SwitchSelectionDomain()
+  }
+}
 
 
 function SetupMenuController()
@@ -305,9 +310,9 @@ function playerController(event) {
   var UP = 38;
   var DOWN = 40;
   var SPACE = 32;
-    if(event.keyCode == LEFT || event.keyCode == RIGHT || event.keyCode == UP || event.keyCode == DOWN) {
-      Player.move(event.keyCode);
-    }
+  if(event.keyCode == LEFT || event.keyCode == RIGHT || event.keyCode == UP || event.keyCode == DOWN) {
+    Player.move(event.keyCode);
+  }
   if (event.keyCode == SPACE) {
     sword.move(event.keyCode);
   }

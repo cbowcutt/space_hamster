@@ -99,7 +99,7 @@ function HamsterSpriteBuilder() {
 	this.createItemShop = function()
 	{
 		let u = new SpriteUtilities(PIXI);
-		var weaponShopSprite = new WeaponShop(u);
+		var weaponShopSprite = new WeaponShop(CreatePIXISprite);
 
 		var highlightSprite = new Animatable();
 		highlightSprite.add_animation("static", u.sprite(u.filmstrip("highlight", 32, 32)));
