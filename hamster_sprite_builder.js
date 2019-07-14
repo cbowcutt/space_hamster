@@ -1,3 +1,8 @@
+function CreatePIXISprite(id, width, height) {
+	let spriteUtilities = new SpriteUtilities(PIXI);
+	return spriteUtilities.sprite(spriteUtilities.filmstrip(id, width, height));
+}
+
 function HamsterSpriteBuilder() {
 
 	this.width = TILEWIDTH;
@@ -15,28 +20,18 @@ function HamsterSpriteBuilder() {
 		hamster_sprite.add_animation('walking_right', u.sprite(u.filmstrip('hamster_right', 128, 128)));
 		hamster_sprite.set_current_animation('walking_down');
 		hamster_sprite.animate(scene, id);
-		
+
 	}
 
 	this.createPlayable = function(name, id) {
-		let u = new SpriteUtilities(PIXI);
-		var hamster_sprite = new PlayableCharacter();
+		var hamster_sprite = new Character(CreatePIXISprite);
 		hamster_sprite.width = this.tile_width;
 		hamster_sprite.height = this.tile_height;
-		
-		var animations = {}
-		
-		animations['walking_down'] = u.sprite(u.filmstrip('hamster_left', 700, 700));
-		animations['walking_left'] = u.sprite(u.filmstrip('hamster_left', 700, 700));
-		animations['walking_right'] = u.sprite(u.filmstrip('hamster_right', 700, 700));
-		animations['walking_down_hurt'] = u.sprite(u.filmstrip('hamster_down_hurt', 128, 128));
-		animations['walking_left_hurt'] = u.sprite(u.filmstrip('hamster_left_hurt', 128,128));
-		animations['walking_up_hurt'] = u.sprite(u.filmstrip('hamster_up_hurt', 128, 128));
-		animations['walking_right_hurt'] =  u.sprite(u.filmstrip('hamster_right_hurt', 128, 128));
-		hamster_sprite = configAnimatable(hamster_sprite, this.tile_width, this.tile_height, animations, "walking_down");
+		hamster_sprite.set_current_animation('walking_left');
+		hamster_sprite.animate(scene);
 		Player = hamster_sprite;
 	}
-	
+
 	this.createRat = function(name, id) {
 		let u = new SpriteUtilities(PIXI);
 		var sprite = new Rat(u);
@@ -47,14 +42,12 @@ function HamsterSpriteBuilder() {
 
 	this.createHome = function(x, y)
 	{
-		let u = new SpriteUtilities(PIXI);
-		var sprite = new Home(u, x, y);
-		sprite.set_current_animation("static");
+		var sprite = new Home(CreatePIXISprite, x, y);
 		sprite.animate(scene);
 		return sprite;
 	}
-	
-	
+
+
 	this.createCoin = function(x, y)
 	{
 		let u = new SpriteUtilities(PIXI);
@@ -63,7 +56,7 @@ function HamsterSpriteBuilder() {
 		sprite = configAnimatable(sprite, 32, 32, {"spinningCoin": u.sprite(u.filmstrip("coin_1", 32, 32))}, "spinningCoin")
 		return sprite;
 	}
-	
+
 	this.createSword = function(character)
 	{
 		let u = new SpriteUtilities(PIXI);
@@ -71,7 +64,7 @@ function HamsterSpriteBuilder() {
 		sprite = configAnimatable(sprite, 32, 32,  {"swing": u.sprite(u.filmstrip("sword", 32, 32))}, "swing");
 		return sprite;
 	}
-	
+
 	this.createHealthBar = function(healthCount, name, id) {
 		var hearts = [];
 		let u = new SpriteUtilities(PIXI);
@@ -82,7 +75,7 @@ function HamsterSpriteBuilder() {
 		}
 		return hearts;
 	}
-	
+
 	this.createDoor = function(x, y, transition)
 	{
 		let u = new SpriteUtilities(PIXI);
@@ -99,7 +92,7 @@ function HamsterSpriteBuilder() {
 		sprite.height = height;
 		Object.keys(animations).forEach(key => sprite.add_animation(key, animations[key]));
 		sprite.set_current_animation(currentAnimation);
-		
+
 		sprite.animate(scene);
 		return sprite;
 	}
@@ -107,10 +100,10 @@ function HamsterSpriteBuilder() {
 	{
 		let u = new SpriteUtilities(PIXI);
 		var weaponShopSprite = new WeaponShop(u);
-		
+
 		var highlightSprite = new Animatable();
 		highlightSprite.add_animation("static", u.sprite(u.filmstrip("highlight", 32, 32)));
-		highlightSprite.set_current_animation("static");		
+		highlightSprite.set_current_animation("static");
 		weaponShopSprite.SetHighlightAnimation(highlightSprite);
 		configAnimatable(weaponShopSprite, 0, 0, {"static": u.sprite(u.filmstrip("weaponShop", 478, 320)) }, "static");
 
@@ -131,12 +124,12 @@ function HamsterSpriteBuilder() {
 		weaponShopSprite.Items.push(heart);
 
 		weaponShopSprite.animate(scene);
-		
+
 		return weaponShopSprite;
-		
+
 	}
-	
-	
+
+
 
 
 }

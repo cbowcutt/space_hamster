@@ -23,16 +23,16 @@ function MapBuilder() {
 			{
 				map.atlas[i].push(1);
 			}
-			for (var j = 8; j < 12; j++)
-			{
-				map.atlas[i][j] = 0;
-			}
+			// for (var j = 8; j < 12; j++)
+			// {
+			// 	map.atlas[i][j] = 0;
+			// }
 		}
 		var tileDictionary = {
 			1: "gray",
 			0: "green"
 		}
-		
+
 		map.background = new PIXI.Sprite(PIXI.Texture.fromCanvas(BuildCanvas(map.atlas, tileDictionary, TILEWIDTH, TILEHEIGHT)));
 		scene.add(map.background);
 		CurrentMap = map;
@@ -66,7 +66,7 @@ function MapBuilder() {
 		scene.add(map.background);
 		CurrentMap = map;
 	}
-	
+
 	this.procedural_dungeon = function(roomCount)
 	{
 		var map = new Map();
@@ -91,8 +91,8 @@ function Door(_x, _y, transition_callback) {
   this.width = TILEWIDTH;
   this.height = TILEHEIGHT;
   // this.new_map
-  this.rectangle = {x: _x * TILEWIDTH, y: _y * TILEHEIGHT, width: TILEWIDTH, height: TILEHEIGHT};
-  // returns boolean 
+  this.rectangle = {x: _x, y: _y, width: TILEWIDTH, height: TILEHEIGHT};
+  // returns boolean
   this.intersects_player = function()
   {
     if(intersects(player_sprite, this.rectangle))
@@ -102,9 +102,6 @@ function Door(_x, _y, transition_callback) {
     return false;
   }
 
-  this.setup_new_state = function() { transition_callback(); }
+  this.setup_new_state = function() { 
+		transition_callback(); }
 }
-
-
-
-

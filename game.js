@@ -1,6 +1,6 @@
 var doors= [];
 
-var inside_home_tilemap 
+var inside_home_tilemap
 
 
 const TILEWIDTH = 32;
@@ -10,6 +10,8 @@ const TILEHEIGHT = 32;
 var scene = new Scene(800, 600, 'myCanvas');
 var Player = undefined;
 var CurrentMap = undefined;
+
+var CurrentGameLoop;
 
 var npcs = []
 
@@ -69,12 +71,16 @@ function neighborhood_1_setup() {
   //   sword = hamster_builder.createSword(Player);
   // hearts = hamster_builder.createHealthBar(5);
   //   walletIcon = hamster_builder.createCoin(2, 2);
-    home = hamster_builder.createHome(6, 6);
+  var itemShop = hamster_builder.createHome(7 * TILEWIDTH, 7 * TILEHEIGHT);
+  CurrentMap.doors.push(new Door(itemShop.doorRectangle().x, itemShop.doorRectangle().y, () => {
+    item_shop_setup();
+  }));
   requestAnimationFrame(neighborhoodLoop);
 }
 
 function item_shop_setup()
 {
+  CurrentGameLoop = itemShopLoop;
 	SetupMenuController();
 	scene.reset();
 	var hamster_builder = new HamsterSpriteBuilder();
@@ -84,9 +90,12 @@ function item_shop_setup()
 
 function neighborhoodLoop()
 {
-	SetupPlayerController();
     scene.render();
-    requestAnimationFrame(neighborhoodLoop);
+    if (!check_door_activations(Player))
+    {
+        requestAnimationFrame(neighborhoodLoop);
+    }
+
 }
 
 function itemShopLoop()
@@ -114,6 +123,7 @@ function gameLoop(){
 };
 
 window.onload = function() {
+  CurrentGameLoop = neighborhoodLoop;
       PIXI.loader
       .add('hamster_left', 'images/hamster_left.png')
       .add('hamster_right', 'images/hamster_right.png')
@@ -143,7 +153,8 @@ window.onload = function() {
 	  .add("weaponShop", "images/shop_template_with_creature478x320.png")
 	  .add('popgun', 'images/popgun.png')
 	  .add('highlight', 'images/highlight_32x32.png')
-      .load(item_shop_setup);
+	  .add('house_taco', 'images/house_taco_81x41.png')
+      .load(neighborhood_1_setup);
 }
 
 function animateCoins()
@@ -164,7 +175,7 @@ function move_hearts()
     {
       var sprite = hearts[i];
       sprite.x = -scene.stage.position.x + i * 32;
-      sprite.y = -scene.stage.position.y; 
+      sprite.y = -scene.stage.position.y;
 
       sprite.width = 32;
       sprite.height = 32;
@@ -189,10 +200,12 @@ function move_wallet()
 
 
 function check_door_activations() {
+  var flag = true;
   for(var i = 0; i < CurrentMap.doors.length; i++) {
     var current_door = CurrentMap.doors[i];
     if (intersects(Player.current_animation, current_door.rectangle)) {
       current_door.setup_new_state();
+      return true;
     }
   }
 }
@@ -265,37 +278,44 @@ function detect_collisions(subject_sprite) {
   return false;
 };
 
-
-function SetupMenuController()
-{
-	window.addEventListener('keydown', function(event) {
+function menuController(event) {
     var LEFT = 37;
     var RIGHT = 39;
     var UP = 38;
     var DOWN = 40;
-	var SPACE = 32;
+  var SPACE = 32;
     if(event.keyCode == LEFT) {
       Menu.MoveSelection(-1);
     }
-	else if(event.keyCode == RIGHT) {
+  else if(event.keyCode == RIGHT) {
       Menu.MoveSelection(1);
     }
-	}, false);
+  }
+
+
+function SetupMenuController()
+{
+  window.removeEventListener('keydown', playerController)
+	window.addEventListener('keydown', menuController);
 }
 
-function SetupPlayerController()
-{
-	window.addEventListener('keydown', function(event) {
-    var LEFT = 37;
-    var RIGHT = 39;
-    var UP = 38;
-    var DOWN = 40;
-	var SPACE = 32;
+function playerController(event) {
+  var LEFT = 37;
+  var RIGHT = 39;
+  var UP = 38;
+  var DOWN = 40;
+  var SPACE = 32;
     if(event.keyCode == LEFT || event.keyCode == RIGHT || event.keyCode == UP || event.keyCode == DOWN) {
       Player.move(event.keyCode);
     }
-	if (event.keyCode == SPACE) {
-		sword.move(event.keyCode);
-	}
-	}, false);
+  if (event.keyCode == SPACE) {
+    sword.move(event.keyCode);
+  }
+  }
+
+function SetupPlayerController()
+{
+  window.removeEventListener('keydown', menuController)
+	window.addEventListener('keydown', playerController);
+
 }
