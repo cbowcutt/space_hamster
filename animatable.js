@@ -30,8 +30,8 @@ function Animatable() {
 	{
 		renderer.add(this.current_animation);
 		this.current_animation.animationSpeed = 0.15;
-		this.current_animation.width = 32;
-		this.current_animation.height = 32;
+		this.current_animation.width = this.width;
+		this.current_animation.height = this.height;
 		this.current_animation.play();
 	}
 
@@ -165,6 +165,9 @@ function Character(_createSprite) {
 	Animatable.call(this);
 	this.createSprite = _createSprite;
 	this.speed = 5;
+	
+	this.width = 64;
+	this.height = 64;
 
 	this.CanTakeDamage = true;
 	this.animations = {
@@ -235,22 +238,37 @@ function Character(_createSprite) {
 	    	this.set_current_animation(new_animation_id);
 	    	this.current_animation.y = current_y + dy;
 	    	this.current_animation.x = current_x + dx;
-	    	scene.stage.position.y -= dy;
-	    	scene.stage.position.x -= dx;
+			
+			var sceneCoord = {x: scene.stage.position.x * -1 , y: (scene.stage.position.y) * -1 }
+			
+			var yDifference = Math.abs(this.current_animation.y  - sceneCoord.y);
+			var xDifference = Math.abs(this.current_animation.x - sceneCoord.x);
+			var sceneTranslation = { x: 0, y: 0 };
+			if (yDifference > scene.stage.height * .75)
+			{
+				sceneTranslation.y = this.speed;
+				//scene.stage.position.y -= dy;
+			}
+			if (yDifference < scene.stage.height * .25)
+			{
+				sceneTranslation.y = -this.speed;
+			}
+			if (xDifference > (scene.stage.width * .75))
+			{
+				sceneTranslation.x = this.speed;
+			}
+			if (xDifference < scene.stage.width * .25)
+			{
+				sceneTranslation.x = -this.speed;
+			}
+			sceneCoord.x += sceneTranslation.x;
+			sceneCoord.y += sceneTranslation.y;
+			scene.stage.position.x = sceneCoord.x * -1;
+			scene.stage.position.y = sceneCoord.y * -1;
 	    	this.animate(scene);
 	    }
   }
 
-  	this.animate = function(renderer) {
-	if (this.current_animation != undefined)
-	{
-		renderer.add(this.current_animation);
-		this.current_animation.animationSpeed = 0.15;
-		this.current_animation.width = 64;
-		this.current_animation.height = 64;
-		this.current_animation.play();
-	}
-	}
 }
 
 function PlayableCharacter(){
@@ -261,7 +279,8 @@ function Health(maxHearts)
 {
 	this.MaxHearts = maxHearts;
 	this.HeldHearts = maxHearts;
-
+	this.width = 32;
+	this.height = 32;
 	Animatable.call(this);
 
 	this.move = function() {
@@ -271,8 +290,8 @@ function Health(maxHearts)
       sprite.x = -scene.stage.position.x + i * 32;
       sprite.y = -scene.stage.position.y;
 
-      sprite.width = 32;
-      sprite.height = 32;
+      sprite.width = this.width;
+      sprite.height = this.height;
       sprite.set_current_animation('heart');
       sprite.current_animation.y = sprite.y;
       sprite.current_animation.x = sprite.x;
