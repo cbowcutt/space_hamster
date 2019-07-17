@@ -5,15 +5,24 @@ function WeaponShop(createSprite)
 		EXIT: 1
 	}
 	Animatable.call(this);
+	this.animations = {
+		"static": createSprite("weaponShop", 478, 320)
+	}
+	this.set_current_animation("static");
 	this.Items = [];
-	this.width = 478;
-	this.height = 320;
+	this.width = 800;
+	this.height = 600;
 
 	this.SelectedIndex = 0;
 
 	this.CurrentDomain = this.Domains.ITEM_SELECT;
 
 	this.Arrow = new Arrow(createSprite, 64, 400);
+
+	this.ExitConfirmed = false;
+
+	this.Dialog = new DialogBox(createSprite, CreatePIXIText, 256+(256/2), 32, 200, 200);
+
 
 	this.CalculateImageCoordinateForItem = function(itemIndex)
 	{
@@ -38,13 +47,21 @@ function WeaponShop(createSprite)
 		}
 	}
 
+	this.ConfirmSelection = function()
+	{
+		if (this.CurrentDomain == this.Domains.EXIT)
+		{
+			this.ExitConfirmed = true;
+		}
+	}
+
 
 	this.animate = function(renderer)
 	{
 		this.current_animation.x = 0;
 		this.current_animation.y = 0;
-		this.current_animation.width = 478;
-		this.current_animation.height = 320;
+		this.current_animation.width = this.width;
+		this.current_animation.height = this.height;
 		renderer.add(this.current_animation);
 		this.current_animation.play();
 		var itemCount = this.Items.length;
@@ -81,6 +98,7 @@ function WeaponShop(createSprite)
 			this.Highlight.current_animation.height = this.Arrow.height;
 		}
 		renderer.add(this.Highlight.current_animation);
+		this.Dialog.animate(renderer);
 		this.Highlight.current_animation.play();
 	}
 

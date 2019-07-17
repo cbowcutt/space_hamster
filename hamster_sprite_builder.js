@@ -105,7 +105,7 @@ function HamsterSpriteBuilder() {
 		highlightSprite.add_animation("static", u.sprite(u.filmstrip("highlight", 32, 32)));
 		highlightSprite.set_current_animation("static");
 		weaponShopSprite.SetHighlightAnimation(highlightSprite);
-		configAnimatable(weaponShopSprite, 0, 0, {"static": u.sprite(u.filmstrip("weaponShop", 478, 320)) }, "static");
+		//configAnimatable(weaponShopSprite, 800, 600, {"static": u.sprite(u.filmstrip("weaponShop", 478, 320)) }, "static");
 
 		var popgunSprite = new Animatable();
 		popgunSprite.add_animation("static", u.sprite(u.filmstrip("popgun", 32, 32)));

@@ -308,3 +308,42 @@ function Arrow(createSprite, _x, _y)
 	}
 	this.set_current_animation("static")
 }
+
+function CreatePIXIText(text, _fontFamily, _fontSize, _fill, _align)
+{
+	return new PIXI.Text(text ,{fontFamily : _fontFamily, fontSize: _fontSize, fill : fill, align : _align});
+}
+
+function DialogBox(createSprite, createText ,_x, _y, _width, _height)
+{
+	Animatable.call(this);
+	this.x = _x;
+	this.y = _y;
+	this.width = _width;
+	this.height = _height;
+
+	this.animations = {
+		"static": createSprite("dialog", 500, 500)
+	}
+	this.set_current_animation("static");
+
+	this.animate = function(renderer)
+	{
+			if (this.current_animation != undefined)
+			{
+				renderer.add(this.current_animation);
+				this.current_animation.animationSpeed = 0.15;
+				this.current_animation.x = this.x;
+				this.current_animation.y = this.y;
+				this.current_animation.width = this.width;
+				this.current_animation.height = this.height;
+				this.current_animation.play();
+			}
+	}
+
+	this.text = "";
+	this.CreateText = createText;
+	this.SetText = function(string) {
+		this.text = this.CreateText(string);
+	}
+}
