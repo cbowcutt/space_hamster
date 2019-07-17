@@ -165,18 +165,18 @@ function Character(_createSprite) {
 	Animatable.call(this);
 	this.createSprite = _createSprite;
 	this.speed = 5;
-	
+
 	this.width = 64;
 	this.height = 64;
 
 	this.CanTakeDamage = true;
 	this.animations = {
-		'walking_left': this.createSprite('hamster_left', 700, 700),
-		'walking_right': this.createSprite('hamster_right', 700, 700),
-		'walking_up': this.createSprite('hamster_right', 700, 700),
-		'walking_down': this.createSprite('hamster_right', 700, 700),
-		'walking_left_hurt': this.createSprite('hamster_left', 700, 700),
-		'walking_right_hurt': this.createSprite('hamster_right', 700, 700)
+		'walking_left': this.createSprite('hamster_left', 87, 100),
+		'walking_right': this.createSprite('hamster_right', 87, 100),
+		'walking_up': this.createSprite('hamster_right', 87, 100),
+		'walking_down': this.createSprite('hamster_right', 87, 100),
+		'walking_left_hurt': this.createSprite('hamster_left', 87, 100),
+		'walking_right_hurt': this.createSprite('hamster_right', 87, 100),
 	}
 
 	this.MakeInvincible = function(time) {
@@ -238,9 +238,9 @@ function Character(_createSprite) {
 	    	this.set_current_animation(new_animation_id);
 	    	this.current_animation.y = current_y + dy;
 	    	this.current_animation.x = current_x + dx;
-			
+
 			var sceneCoord = {x: scene.stage.position.x * -1 , y: (scene.stage.position.y) * -1 }
-			
+
 			var yDifference = Math.abs(this.current_animation.y  - sceneCoord.y);
 			var xDifference = Math.abs(this.current_animation.x - sceneCoord.x);
 			var sceneTranslation = { x: 0, y: 0 };
