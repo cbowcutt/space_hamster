@@ -59,9 +59,11 @@ function procedural_dungeon_setup() {
 }
 
 function neighborhood_1_setup() {
+  scene.reset();
+  CurrentGameLoop = neighborhoodLoop;
   SetupPlayerController();
   // add the hamster
-  scene.reset();
+
   var map_builder = new MapBuilder();
   map_builder.neighborhood_1();
   var hamster_builder = new HamsterSpriteBuilder();
@@ -69,8 +71,8 @@ function neighborhood_1_setup() {
   hamster_builder.createPlayable();
   Player.set_position(5 * TILEWIDTH, 5 * TILEHEIGHT);
   //   sword = hamster_builder.createSword(Player);
-  // hearts = hamster_builder.createHealthBar(5);
-  //   walletIcon = hamster_builder.createCoin(2, 2);
+  hearts = hamster_builder.createHealthBar(5);
+  walletIcon = hamster_builder.createCoin(2, 2);
   var itemShop = hamster_builder.createHome(7 * TILEWIDTH, 7 * TILEHEIGHT);
   CurrentMap.doors.push(new Door(itemShop.doorRectangle().x, itemShop.doorRectangle().y, () => {
     item_shop_setup();
@@ -90,6 +92,7 @@ function item_shop_setup()
 
 function neighborhoodLoop()
 {
+    AnimateHUD();
     scene.render();
     if (!check_door_activations(Player))
     {
@@ -98,11 +101,33 @@ function neighborhoodLoop()
 
 }
 
+function AnimateHUD()
+{
+  move_wallet();
+  move_hearts();
+}
+
+function AddHUDToScene()
+{
+
+  scene.add(walletIcon);
+}
+
 function itemShopLoop()
 {
+
 	Menu.animate(scene);
+  AnimateHUD();
 	scene.render();
-	requestAnimationFrame(itemShopLoop);
+  if (Menu.ExitConfirmed)
+  {
+      neighborhood_1_setup();
+
+  }
+  else {
+      requestAnimationFrame(itemShopLoop);
+  }
+
 }
 
 
@@ -125,36 +150,37 @@ function gameLoop(){
 window.onload = function() {
   CurrentGameLoop = neighborhoodLoop;
       PIXI.loader
-      .add('hamster_left', 'images/hamster_left.png')
-      .add('hamster_right', 'images/hamster_right.png')
-      .add('hamster_up', 'images/hamster_up.png')
-      .add('hamster_down', 'images/hamster_down.png')
-	  .add('hamster_left_hurt', 'images/hamster_left_hurt.png')
-      .add('hamster_right_hurt', 'images/hamster_right_hurt.png')
-      .add('hamster_up_hurt', 'images/hamster_up_hurt.png')
-      .add('hamster_down_hurt', 'images/hamster_down_hurt.png')
-	  .add('rat_left', 'images/rat_left.png')
-      .add('rat_right', 'images/rat_right.png')
-      .add('rat_up', 'images/rat_up.png')
-      .add('rat_down', 'images/rat_down.png')
-      .add('neighborhood_1', 'images/neighborhood_1.png')
-      .add('inside_home', 'images/inside_home.png')
-	  .add('heart', 'images/heart.png')
-	  .add('coin_1', 'images/goldCoin1.png')
-	  .add('coin_2', 'images/goldCoin2.png')
-	  .add('coin_3', 'images/goldCoin3.png')
-	  .add('coin_4', 'images/goldCoin4.png')
-	  .add('coin_5', 'images/goldCoin5.png')
-	  .add('coin_6', 'images/goldCoin6.png')
-	  .add('coin_7', 'images/goldCoin7.png')
-	  .add('sword', 'images/sword.png')
-	  .add('doors', 'images/dungeonHole.png')
-      .add('home', 'images/house.png')
-	  .add("weaponShop", "images/shop_template_with_creature478x320.png")
-	  .add('popgun', 'images/popgun.png')
-	  .add('highlight', 'images/highlight_32x32.png')
-	  .add('house_taco', 'images/house_taco_81x41.png')
-	  .add('arrow', 'images/arrow_100x100.png')
+        .add('hamster_left', 'images/hamster_left.png')
+        .add('hamster_right', 'images/hamster_right.png')
+        .add('hamster_up', 'images/hamster_up.png')
+        .add('hamster_down', 'images/hamster_down.png')
+        .add('hamster_left_hurt', 'images/hamster_left_hurt.png')
+        .add('hamster_right_hurt', 'images/hamster_right_hurt.png')
+        .add('hamster_up_hurt', 'images/hamster_up_hurt.png')
+        .add('hamster_down_hurt', 'images/hamster_down_hurt.png')
+        .add('rat_left', 'images/rat_left.png')
+        .add('rat_right', 'images/rat_right.png')
+        .add('rat_up', 'images/rat_up.png')
+        .add('rat_down', 'images/rat_down.png')
+        .add('neighborhood_1', 'images/neighborhood_1.png')
+        .add('inside_home', 'images/inside_home.png')
+        .add('heart', 'images/heart.png')
+        .add('coin_1', 'images/goldCoin1.png')
+        .add('coin_2', 'images/goldCoin2.png')
+        .add('coin_3', 'images/goldCoin3.png')
+        .add('coin_4', 'images/goldCoin4.png')
+        .add('coin_5', 'images/goldCoin5.png')
+        .add('coin_6', 'images/goldCoin6.png')
+        .add('coin_7', 'images/goldCoin7.png')
+        .add('sword', 'images/sword.png')
+        .add('doors', 'images/dungeonHole.png')
+        .add('home', 'images/house.png')
+        .add("weaponShop", "images/shop_template_with_creature478x320.png")
+        .add('popgun', 'images/popgun.png')
+        .add('highlight', 'images/highlight_32x32.png')
+        .add('house_taco', 'images/house_taco_81x41.png')
+        .add('arrow', 'images/arrow_100x100.png')
+        .add('dialog', 'images/dialog_box_500x500.png')
       .load(neighborhood_1_setup);
 }
 
@@ -285,6 +311,7 @@ function menuController(event) {
   var UP = 38;
   var DOWN = 40;
   var SPACE = 32;
+  var ENTER = 13;
   if(event.keyCode == LEFT) {
     Menu.MoveSelection(-1);
   }
@@ -294,6 +321,10 @@ function menuController(event) {
   else if (event.keyCode == DOWN || event.keyCode == UP)
   {
     Menu.SwitchSelectionDomain()
+  }
+  if (event.keyCode == ENTER)
+  {
+    Menu.ConfirmSelection();
   }
 }
 
@@ -310,13 +341,14 @@ function playerController(event) {
   var UP = 38;
   var DOWN = 40;
   var SPACE = 32;
+
   if(event.keyCode == LEFT || event.keyCode == RIGHT || event.keyCode == UP || event.keyCode == DOWN) {
     Player.move(event.keyCode);
   }
   if (event.keyCode == SPACE) {
     sword.move(event.keyCode);
   }
-  }
+}
 
 function SetupPlayerController()
 {
