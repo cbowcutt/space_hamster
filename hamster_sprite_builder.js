@@ -25,8 +25,6 @@ function HamsterSpriteBuilder() {
 
 	this.createPlayable = function(name, id) {
 		var hamster_sprite = new Character(CreatePIXISprite);
-		hamster_sprite.width = this.tile_width;
-		hamster_sprite.height = this.tile_height;
 		hamster_sprite.set_current_animation('walking_left');
 		hamster_sprite.animate(scene);
 		Player = hamster_sprite;
