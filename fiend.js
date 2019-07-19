@@ -12,15 +12,15 @@ function Rat(spriteUtilities) {
 	};
 }
 
-function SunScion(spriteUtilities) {
-	Fiend.call(this);
-	this.animations = {
-		'walking_left': spriteUtilities.sprite(spriteUtilities.filmstrip('sun_scion', 96, 96)),
-		'walking_right': spriteUtilities.sprite(spriteUtilities.filmstrip('sun_scion', 96, 96)),
-		'walking_up': spriteUtilities.sprite(spriteUtilities.filmstrip('sun_scion', 96, 96)),
-		'walking_down': spriteUtilities.sprite(spriteUtilities.filmstrip('sun_scion', 96, 96)),
-	};
-}
+// function SunScion(spriteUtilities) {
+	// Fiend.call(this);
+	// this.animations = {
+		// 'walking_left': spriteUtilities.sprite(spriteUtilities.filmstrip('sun_scion', 96, 96)),
+		// 'walking_right': spriteUtilities.sprite(spriteUtilities.filmstrip('sun_scion', 96, 96)),
+		// 'walking_up': spriteUtilities.sprite(spriteUtilities.filmstrip('sun_scion', 96, 96)),
+		// 'walking_down': spriteUtilities.sprite(spriteUtilities.filmstrip('sun_scion', 96, 96)),
+	// };
+// }
 
 function Fiend(spriteUtilities)
 {

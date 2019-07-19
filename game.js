@@ -26,6 +26,7 @@ var sword;
 var home;
 var Menu;
 
+var fiends = [];
 
 function inside_home_setup() {
   var map_builder = new MapBuilder();
@@ -60,12 +61,13 @@ function procedural_dungeon_setup() {
 
 function neighborhood_1_setup() {
   SetupPlayerController();
+  fiends = [];
   // add the hamster
   scene.reset();
   var map_builder = new MapBuilder();
   map_builder.neighborhood_1();
   var hamster_builder = new HamsterSpriteBuilder();
-
+  fiends.push(new SunScion(CreatePIXISprite, 400, 100))
   hamster_builder.createPlayable();
   Player.set_position(5 * TILEWIDTH, 5 * TILEHEIGHT);
   //   sword = hamster_builder.createSword(Player);
@@ -90,6 +92,10 @@ function item_shop_setup()
 
 function neighborhoodLoop()
 {
+	fiends.forEach(fiend => {
+		fiend.Move();
+		fiend.animate(scene);
+	})
     scene.render();
     if (!check_door_activations(Player))
     {
@@ -137,6 +143,7 @@ window.onload = function() {
       .add('rat_right', 'images/rat_right.png')
       .add('rat_up', 'images/rat_up.png')
       .add('rat_down', 'images/rat_down.png')
+	  .add('sun_scion', 'images/sun_scion.png')
       .add('neighborhood_1', 'images/neighborhood_1.png')
       .add('inside_home', 'images/inside_home.png')
 	  .add('heart', 'images/heart.png')

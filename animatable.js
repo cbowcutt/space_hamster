@@ -30,6 +30,8 @@ function Animatable() {
 	{
 		renderer.add(this.current_animation);
 		this.current_animation.animationSpeed = 0.15;
+		this.current_animation.x = this.x;
+		this.current_animation.y = this.y;
 		this.current_animation.width = this.width;
 		this.current_animation.height = this.height;
 		this.current_animation.play();
@@ -111,14 +113,35 @@ function Rat(CreateSprite) {
 	}
 }
 
-function SunScion(spriteUtilities) {
-	Fiend.call(this);
+function SunScion(CreateSprite, _x0, _y0) {
+	Animatable.call(this);
+	this.width = 96;
+	this.height = 96;
+	this.x = _x0;
+	this.y = _y0;
 	this.animations = {
 		'walking_left': CreateSprite('sun_scion', 96, 96),
 		'walking_right': CreateSprite('sun_scion', 96, 96),
 		'walking_up': CreateSprite('sun_scion', 96, 96),
 		'walking_down': CreateSprite('sun_scion', 96, 96),
 	};
+	this.set_current_animation("walking_left");
+
+	this.x0 = _x0;
+	this.y0 = _y0;
+	this.t = 0;
+	this.period = 50;
+	this.Move = function() {
+		
+		this.amplitude = -200;
+		this.t++;
+		this.dx = this.amplitude * Math.sin(this.t/this.period);
+		this.dy = this.amplitude * Math.cos(this.t/this.period);
+		var newY = this.y0 + this.dy;
+		var newX = (this.x0 + this.dx);
+		this.x = newX < this.x0 ? newX : this.x0;
+		this.y = newY < this.y0 ? this.y0 : newY;
+	}
 }
 
 function Fiend()
