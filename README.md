@@ -1,11 +1,21 @@
 # space_hamster
 
-This is a prototype for a 2D Top-Down RPG-Style game using fan-made spritesheets for the Hamtaro franchise.
+
+
+
+
+# Setup
+
+in the root directory of the project, run: 
+
+`npm install`
 
 # How to Run
 
-After downloading the repository, open a web browser (preferrably firefox), and open the file index.html, which is located in the root level of the repository.
+in the root directory, run:
 
-# Game Controls
+`node server.js`
 
-Use the arrow keys to move the hamster.
+
+
+Open a Chrome or Firefox browser and go to http://localhost:3000/index.html
